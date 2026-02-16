@@ -65,7 +65,7 @@
                 <div class="courses-row">
                     <!-- ========== add teacher ========== -->
                     <div class="teacher-card add-teacher">
-                        <a href="add-docente.php" class="add-link" title="Agregar nuevo docente">
+                        <a href="add_docente.php" class="add-link" title="Agregar nuevo docente">
                             <div class="teacher-image">
                                 <!-- Fondo gris o una imagen de placeholder -->
                                 <img src="https://cdn-icons-png.freepik.com/512/16788/16788520.png" alt="Agregar Docente">
@@ -110,6 +110,11 @@
                                         <path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19V4Z" />
                                     </svg>
                                 </button>
+
+                                <button class="btn btn-warning" onclick="resetCredenciales('12345678')">
+    Resetear acceso
+</button>
+
 
                                 <button class="action toggle-active" title="Activo/Inactivo">Activo</button>
                             </div>
