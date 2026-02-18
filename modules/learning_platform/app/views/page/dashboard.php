@@ -523,6 +523,9 @@ $solicitudes = $controller->getSolicitudesReset();
     <?php require_once('../layout/footer.php'); ?>
   </main>
   <!-- ======== main-wrapper end =========== -->
+   NO FUNCIONA EL SONIDO DE NOTIFICACIÓN, REVISAR RUTA Y FORMATO DEL ARCHIVO MP3
+
+  <audio id="sonidoNotificacion" src="../../../assets/sounds/Juan Luis Guerra 4.40 - Vale la Pena (Live) (Video Oficial).mp3" preload="auto"></audio>
 
   <!-- ========= All Javascript files linkup ======== -->
   <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
@@ -536,6 +539,63 @@ $solicitudes = $controller->getSolicitudesReset();
   <script src="../../../assets/js/main.js"></script>
 
   <script>
+    let cantidadAnterior = <?php echo $noLeidas; ?>;
+
+    function actualizarNotificaciones() {
+      fetch("../../controllers/NotificacionesController.php")
+        .then(res => res.json())
+        .then(data => {
+
+          let noLeidas = data.filter(n => n.estado == 0).length;
+
+          // actualizar contador
+          let contador = document.getElementById("contadorNotificaciones");
+
+          if (contador) {
+            contador.innerText = noLeidas;
+          }
+
+          // sonido si hay nuevas
+          if (noLeidas > cantidadAnterior) {
+            document.getElementById("sonidoNotificacion").play();
+          }
+
+          cantidadAnterior = noLeidas;
+
+          // actualizar tabla
+          let tbody = document.querySelector("#tablaReset tbody");
+          tbody.innerHTML = "";
+
+          data.forEach(s => {
+
+            let color = s.estado == 0 ? "#656769" : "#15df07";
+            let icono = s.estado == 0 ? "lni-envelope" : "lni-checkmark-circle";
+            let boton = s.estado == 0 ?
+              `<button onclick="marcarLeido(${s.id})"
+              style="width:34px;height:34px;border-radius:50%;border:1.5px solid ${color};background:${color};color:#fff;">
+              <i class="lni ${icono}"></i>
+            </button>` :
+              `<button
+              style="width:34px;height:34px;border-radius:50%;border:1.5px solid ${color};background:${color};color:#fff;">
+              <i class="lni ${icono}"></i>
+            </button>`;
+
+            tbody.innerHTML += `
+          <tr>
+            <td>${s.usuario}</td>
+            <td>${s.mensaje}</td>
+            <td>${s.fecha_solicitud}</td>
+            <td style="text-align:center;">${boton}</td>
+          </tr>
+        `;
+          });
+
+        });
+    }
+
+    // actualizar cada 10 segundos
+    setInterval(actualizarNotificaciones, 10000);
+
     function marcarLeido(id) {
       fetch("../../controllers/MarcarLeidoController.php", {
           method: "POST",

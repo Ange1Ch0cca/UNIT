@@ -14,6 +14,17 @@ class DashboardController
     // =========================
     // DASHBOARD SEGÚN ROL
     // =========================
+    public function contarNoLeidas()
+{
+    $stmt = $this->conn->query("
+        SELECT COUNT(*) AS total
+        FROM solicitudes_reset
+        WHERE estado = 0
+    ");
+
+    return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+}
+
     public function getDashboardData($userId, $rol)
     {
         switch ($rol) {

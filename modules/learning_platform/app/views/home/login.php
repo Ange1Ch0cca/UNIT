@@ -239,19 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
       return encodeURIComponent(msg);
     }
 
-    function enviarCorreo() {
-      let msg = generarMensaje("correo");
-      if (!msg) return;
-      window.location.href = `mailto:admin@error404.pe?subject=Recuperación de acceso&body=${msg}`;
-    }
-
-    function enviarWhatsapp() {
-      let msg = generarMensaje("WhatsApp");
-      if (!msg) return;
-      window.open(`https://wa.me/906829934?text=${msg}`, "_blank");
-    }
-
-    function modoSalon() {
+    function enviarSolicitud(tipo) {
   let usuario = document.getElementById("recUsuario").value;
   let nombre = document.getElementById("recNombre").value;
 
@@ -265,18 +253,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
     },
-    body: `usuario=${encodeURIComponent(usuario)}&nombre=${encodeURIComponent(nombre)}`
+    body: `usuario=${encodeURIComponent(usuario)}&nombre=${encodeURIComponent(nombre)}&tipo=${tipo}`
   })
-  .then(response => response.text())
-  .then(data => {
-    showAlert("Solicitud enviada correctamente.");
+  .then(() => {
     document.getElementById("recoveryMsg").innerText =
-      "El administrador revisará tu solicitud. Acercate a la sala de cómputo por tus nuevas credenciales. Gracias por tu paciencia.";
-  })
-  .catch(error => {
-    showAlert("Error al enviar la solicitud.");
+      "Solicitud enviada. El administrador revisará tu caso.";
   });
 }
+
+function enviarCorreo() {
+  enviarSolicitud("correo");
+
+  let msg = generarMensaje("correo");
+  if (!msg) return;
+  window.location.href = `mailto:admin@error404.pe?subject=Recuperación de acceso&body=${msg}`;
+}
+
+function enviarWhatsapp() {
+  enviarSolicitud("whatsapp");
+
+  let msg = generarMensaje("WhatsApp");
+  if (!msg) return;
+  window.open(`https://wa.me/906829934?text=${msg}`, "_blank");
+}
+
+function modoSalon() {
+  enviarSolicitud("salon");
+
+  document.getElementById("recoveryMsg").innerText =
+    "Acércate al docente para recibir tus nuevas credenciales.";
+}
+
 
     <?php if ($error): ?>
       showAlert(<?php echo json_encode($error); ?>);
