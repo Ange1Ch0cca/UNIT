@@ -3,7 +3,6 @@ require_once __DIR__ . "/../../config/database.php";
 
 class AuthController
 {
-
     private $conexion;
 
     public function __construct()
@@ -14,7 +13,6 @@ class AuthController
 
     public function login($usuario, $password)
     {
-
         $sql = "SELECT u.*, r.nombre AS rol 
                 FROM usuarios u
                 INNER JOIN roles r ON u.rol_id = r.id
@@ -45,7 +43,30 @@ class AuthController
     {
         try {
 
-            // Verificar si DNI ya existe
+            // ==============================
+            // LIMPIEZA Y NORMALIZACIÓN
+            // ==============================
+            $datos["nombres"]   = strtoupper(trim($datos["nombres"]));
+            $datos["apellidos"] = strtoupper(trim($datos["apellidos"]));
+            $datos["dni"]       = strtoupper(trim($datos["dni"]));
+            $datos["password"]  = trim($datos["password"]);
+
+            // ==============================
+            // VALIDAR CONTRASEÑA SEGURA
+            // ==============================
+            $password = $datos["password"];
+
+            if (
+                strlen($password) < 8 ||
+                !preg_match('/[A-Z]/', $password) ||
+                !preg_match('/[0-9]/', $password)
+            ) {
+                return "password_insegura";
+            }
+
+            // ==============================
+            // VERIFICAR SI DNI YA EXISTE
+            // ==============================
             $sql = "SELECT id FROM usuarios WHERE dni = :dni";
             $stmt = $this->conexion->prepare($sql);
             $stmt->bindParam(":dni", $datos["dni"]);
@@ -55,11 +76,13 @@ class AuthController
                 return "dni_existe";
             }
 
-            // Generar usuario automático
-            $nombres = explode(" ", trim($datos["nombres"]));
+            // ==============================
+            // GENERAR USUARIO AUTOMÁTICO
+            // ==============================
+            $nombres = explode(" ", $datos["nombres"]);
             $primerNombre = strtolower($nombres[0]);
 
-            $apellidos = explode(" ", trim($datos["apellidos"]));
+            $apellidos = explode(" ", $datos["apellidos"]);
             $primerApellido = strtolower($apellidos[0]);
 
             $baseUsuario = substr($primerNombre, 0, 1) . $primerApellido;
@@ -82,14 +105,18 @@ class AuthController
                 $contador++;
             }
 
-            // Encriptar contraseña
-            $passwordHash = password_hash($datos["password"], PASSWORD_DEFAULT);
+            // ==============================
+            // ENCRIPTAR CONTRASEÑA
+            // ==============================
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-            // Insertar alumno
+            // ==============================
+            // INSERTAR ALUMNO
+            // ==============================
             $sql = "INSERT INTO usuarios 
-                (usuario, dni, nombres, apellidos, password, rol_id, estado) 
-                VALUES 
-                (:usuario, :dni, :nombres, :apellidos, :password, 3, 1)";
+                    (usuario, dni, nombres, apellidos, password, rol_id, estado) 
+                    VALUES 
+                    (:usuario, :dni, :nombres, :apellidos, :password, 3, 1)";
 
             $stmt = $this->conexion->prepare($sql);
 

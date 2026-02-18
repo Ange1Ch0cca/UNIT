@@ -1,3 +1,5 @@
+require_once "../config/session.php";
+
 <!DOCTYPE html>
 <html lang="en">
 
