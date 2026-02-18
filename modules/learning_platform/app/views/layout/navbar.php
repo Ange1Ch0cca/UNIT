@@ -14,10 +14,11 @@ $noLeidas = $controller->contarNoLeidas();
       <div class="col-lg-5 col-md-5 col-6">
         <div class="header-left d-flex align-items-center">
           <div class="menu-toggle-btn mr-15">
-            <button id="menu-toggle" class="main-btn primary-btn btn-hover">
-              <i class="lni lni-chevron-left me-2"></i> Menu
-            </button>
-          </div>
+    <button id="menu-toggle" class="main-btn primary-btn btn-hover">
+    <i class="mdi mdi-chevron-left me-2"></i> Menu
+</button>
+
+</div>
           <!--Buscador
           <div class="header-search d-none d-md-flex">
             <form action="#">
@@ -31,25 +32,29 @@ $noLeidas = $controller->contarNoLeidas();
       <div class="col-lg-7 col-md-7 col-6">
         <div class="header-right">
           <?php if ($_SESSION['rol'] == 'admin'): ?>
-          <!-- notification start -->
-          <div style="position:relative;">
-            <i class="lni lni-alarm" style="font-size:22px;"></i>
+            <!-- notification start -->
+            <div style="position:relative;">
 
-            <?php if ($noLeidas > 0): ?>
-              <span id="contadorNotificaciones" style="
-      position:absolute;
-      top:-6px;
-      right:-8px;
-      background:red;
-      color:white;
-      font-size:11px;
-      padding:2px 6px;
-      border-radius:50%;
-    ">
-                <?php echo $noLeidas; ?>
-              </span>
-            <?php endif; ?>
-          </div>
+              <a href="dashboard.php" style="color:inherit;">
+                <i class="lni lni-alarm" style="font-size:22px; cursor:pointer;"></i>
+              </a>
+
+              <?php if ($noLeidas > 0): ?>
+                <span id="contadorNotificaciones" style="
+        position:absolute;
+        top:-6px;
+        right:-8px;
+        background:red;
+        color:white;
+        font-size:11px;
+        padding:2px 6px;
+        border-radius:50%;
+      ">
+                  <?php echo $noLeidas; ?>
+                </span>
+              <?php endif; ?>
+
+            </div>
           <?php endif; ?>
 
           <!-- notification end -->

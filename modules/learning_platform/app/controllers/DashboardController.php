@@ -165,4 +165,96 @@ class DashboardController
 
         return $data;
     }
+
+    // =========================
+// OBTENER USUARIOS POR ROL
+// =========================
+public function getUsuariosPorRol($rolId)
+{
+    $stmt = $this->conn->prepare("
+        SELECT 
+            id,
+            usuario,
+            nombres,
+            apellidos,
+            foto,
+            estado
+        FROM usuarios
+        WHERE rol_id = ?
+        ORDER BY id DESC
+    ");
+
+    $stmt->execute([$rolId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function getUsuarioPorId($id){
+
+    $sql = "SELECT 
+                u.id,
+                u.usuario,
+                u.dni,
+                u.nombres,
+                u.apellidos,
+                u.correo,
+                u.celular,
+                u.foto,
+                u.estado,
+                u.fecha_registro,
+                r.nombre AS rol,
+                e.fecha_ingreso,
+                g.nombre_grado,
+                g.seccion
+            FROM usuarios u
+            LEFT JOIN roles r ON u.rol_id = r.id
+            LEFT JOIN estudiantes e ON u.id = e.usuario_id
+            LEFT JOIN grados g ON e.grado_id = g.id
+            WHERE u.id = ?";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([$id]);
+
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if($usuario){
+
+        if($usuario['estado'] == 1){
+            $usuario['estado_texto'] = "Activo";
+        } elseif($usuario['estado'] == 2){
+            $usuario['estado_texto'] = "Bloqueado";
+        } else {
+            $usuario['estado_texto'] = "Inactivo";
+        }
+
+        // Grado completo
+        if($usuario['nombre_grado']){
+            $usuario['grado_completo'] = $usuario['nombre_grado'] . " - " . $usuario['seccion'];
+        } else {
+            $usuario['grado_completo'] = "No asignado";
+        }
+
+    }
+
+    return $usuario;
+}
+
+
+
+public function inactivarUsuario($id){
+
+    $sql = "UPDATE usuarios SET estado = 3 WHERE id = ?";
+    $stmt = $this->conn->prepare($sql);
+    return $stmt->execute([$id]);
+
+}
+
+public function actualizarEstadoUsuario($id, $estado){
+
+    $sql = "UPDATE usuarios SET estado = ? WHERE id = ?";
+    $stmt = $this->conn->prepare($sql);
+
+    return $stmt->execute([$estado, $id]);
+}
+
+
 }

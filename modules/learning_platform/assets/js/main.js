@@ -1,22 +1,22 @@
 (function () {
   /* ========= Preloader ======== */
-  const preloader = document.querySelectorAll('#preloader')
+  const preloader = document.querySelectorAll('#preloader');
 
   window.addEventListener('load', function () {
     if (preloader.length) {
-      this.document.getElementById('preloader').style.display = 'none'
+      document.getElementById('preloader').style.display = 'none';
     }
-  })
+  });
 
   /* ========= Add Box Shadow in Header on Scroll ======== */
   window.addEventListener('scroll', function () {
-    const header = document.querySelector('.header')
+    const header = document.querySelector('.header');
     if (window.scrollY > 0) {
-      header.style.boxShadow = '0px 0px 30px 0px rgba(200, 208, 216, 0.30)'
+      header.style.boxShadow = '0px 0px 30px 0px rgba(200, 208, 216, 0.30)';
     } else {
-      header.style.boxShadow = 'none'
+      header.style.boxShadow = 'none';
     }
-  })
+  });
 
   /* ========= sidebar toggle ======== */
   const sidebarNavWrapper = document.querySelector(".sidebar-nav-wrapper");
@@ -30,31 +30,23 @@
     overlay.classList.add("active");
     mainWrapper.classList.toggle("active");
 
-    if (document.body.clientWidth > 1200) {
-      if (menuToggleButtonIcon.classList.contains("lni-chevron-left")) {
-        menuToggleButtonIcon.classList.remove("lni-chevron-left");
-        menuToggleButtonIcon.classList.add("lni-menu");
-      } else {
-        menuToggleButtonIcon.classList.remove("lni-menu");
-        menuToggleButtonIcon.classList.add("lni-chevron-left");
-      }
+    // Cambiar icono MDI
+    if (menuToggleButtonIcon.classList.contains("mdi-chevron-left")) {
+      menuToggleButtonIcon.classList.remove("mdi-chevron-left");
+      menuToggleButtonIcon.classList.add("mdi-menu");
     } else {
-      if (menuToggleButtonIcon.classList.contains("lni-chevron-left")) {
-        menuToggleButtonIcon.classList.remove("lni-chevron-left");
-        menuToggleButtonIcon.classList.add("lni-menu");
-      }
+      menuToggleButtonIcon.classList.remove("mdi-menu");
+      menuToggleButtonIcon.classList.add("mdi-chevron-left");
     }
   });
+
   overlay.addEventListener("click", () => {
     sidebarNavWrapper.classList.remove("active");
     overlay.classList.remove("active");
     mainWrapper.classList.remove("active");
+
+    // Volver icono a flecha cuando cerramos con overlay
+    menuToggleButtonIcon.classList.remove("mdi-menu");
+    menuToggleButtonIcon.classList.add("mdi-chevron-left");
   });
 })();
-
-const toggleBtn = document.querySelector('.toggle-active');
-
-toggleBtn.addEventListener('click', () => {
-  toggleBtn.classList.toggle('inactive');
-  toggleBtn.textContent = toggleBtn.classList.contains('inactive') ? 'Inactivo' : 'Activo';
-});

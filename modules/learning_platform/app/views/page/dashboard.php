@@ -25,8 +25,7 @@ $solicitudes = $controller->getSolicitudesReset();
 
   <!-- ========== All CSS files linkup ========= -->
   <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="../../../assets/css/lineicons.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="../../../assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/css/fullcalendar.css" />
   <link rel="stylesheet" href="../../../assets/css/fullcalendar.css" />
   <link rel="stylesheet" href="../../../assets/css/main.css" />
@@ -90,6 +89,7 @@ $solicitudes = $controller->getSolicitudesReset();
         <?php if ($rol === 'admin'): ?>
           <div class="row" style="row-gap:15px; margin-bottom:30px;">
 
+
             <!-- Alumnos -->
             <div class="col-lg-2 col-4 d-flex">
               <div style="width:100%; background:#fff; border-radius:12px; padding:18px; 
@@ -102,8 +102,9 @@ $solicitudes = $controller->getSolicitudesReset();
                   <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_estudiantes']; ?></h3>
                 </div>
 
-                <i class="lni lni-users"
+                <i class="mdi mdi-account-group"
                   style="font-size:28px; color:#4CAF50; flex-shrink:0;"></i>
+
               </div>
             </div>
 
@@ -119,8 +120,9 @@ $solicitudes = $controller->getSolicitudesReset();
                   <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_actividades']; ?></h3>
                 </div>
 
-                <i class="lni lni-write"
+                <i class="mdi mdi-pencil"
                   style="font-size:28px; color:#2196F3; flex-shrink:0;"></i>
+
               </div>
             </div>
 
@@ -136,8 +138,9 @@ $solicitudes = $controller->getSolicitudesReset();
                   <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_materiales']; ?></h3>
                 </div>
 
-                <i class="lni lni-folder"
+                <i class="mdi mdi-folder"
                   style="font-size:28px; color:#FF9800; flex-shrink:0;"></i>
+
               </div>
             </div>
 
@@ -153,8 +156,9 @@ $solicitudes = $controller->getSolicitudesReset();
                   <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_grados']; ?></h3>
                 </div>
 
-                <i class="lni lni-graduation"
+                <i class="mdi mdi-school"
                   style="font-size:28px; color:#9C27B0; flex-shrink:0;"></i>
+
               </div>
             </div>
 
@@ -170,8 +174,9 @@ $solicitudes = $controller->getSolicitudesReset();
                   <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_cursos']; ?></h3>
                 </div>
 
-                <i class="lni lni-book"
+                <i class="mdi mdi-book-open-variant"
                   style="font-size:28px; color:#F44336; flex-shrink:0;"></i>
+
               </div>
             </div>
 
@@ -181,13 +186,11 @@ $solicitudes = $controller->getSolicitudesReset();
                 box-shadow:0 4px 12px rgba(0,0,0,0.06); 
                 border-left:5px solid #00BCD4;
                 display:flex; align-items:center; justify-content:space-between;">
-
                 <div style="min-width:0;">
                   <h6 style="font-size:14px; color:#6c757d; margin-bottom:5px;">Docentes</h6>
                   <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_docentes']; ?></h3>
                 </div>
-
-                <i class="lni lni-blackboard"
+                <i class="mdi mdi-account-tie"
                   style="font-size:28px; color:#00BCD4; flex-shrink:0;"></i>
               </div>
             </div>
@@ -218,7 +221,8 @@ $solicitudes = $controller->getSolicitudesReset();
                 <div class="table-responsive">
                   <table id="tablaReset"
                     class="table align-middle"
-                    style="width:100%; border-collapse:separate; border-spacing:0 8px;">
+                    style="width:100%;">
+
 
                     <thead>
                       <tr style="background:#f8f9fa;">
@@ -241,12 +245,12 @@ $solicitudes = $controller->getSolicitudesReset();
                             <?php if ($s['estado'] == 0): ?>
                               <button onclick="marcarLeido(<?php echo $s['id']; ?>)"
                                 style="width:34px;height:34px;border-radius:50%;border:1.5px solid #656769;background:#656769;color:#fff;">
-                                <i class="lni lni-envelope"></i>
+                                <i class="mdi mdi-email-outline"></i>
                               </button>
                             <?php else: ?>
                               <button
                                 style="width:34px;height:34px;border-radius:50%;border:1.5px solid #15df07;background:#15df07;color:#fff;">
-                                <i class="lni lni-checkmark-circle"></i>
+                                <i class="mdi mdi-check-circle-outline"></i>
                               </button>
                             <?php endif; ?>
                           </td>
@@ -409,7 +413,7 @@ $solicitudes = $controller->getSolicitudesReset();
                                color:#fff;
                                padding:6px 10px;
                                border-radius:8px;">
-                              <i class="lni lni-eye"></i>
+                              <i class="mdi mdi-eye-outline"></i>
                             </button>
                           </td>
                         </tr>
@@ -454,7 +458,7 @@ $solicitudes = $controller->getSolicitudesReset();
                                color:#fff;
                                padding:6px 10px;
                                border-radius:8px;">
-                              <i class="lni lni-download"></i>
+                              <i class="mdi mdi-download"></i>
                             </button>
                           </td>
                         </tr>
@@ -484,8 +488,7 @@ $solicitudes = $controller->getSolicitudesReset();
                   <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_cursos']; ?></h3>
                 </div>
 
-                <i class="lni lni-users"
-                  style="font-size:28px; color:#4CAF50; flex-shrink:0;"></i>
+                <i class="mdi mdi-pencil" style="font-size:36px;color:#2196F3;"></i>
               </div>
             </div>
           </div>
@@ -499,14 +502,14 @@ $solicitudes = $controller->getSolicitudesReset();
 
             <div class="col-lg-4">
               <div class="card-style mb-30 text-center">
-                <i class="lni lni-folder" style="font-size:36px;color:#FF9800;"></i>
+                <i class="mdi mdi-folder-upload" style="font-size:36px;color:#FF9800;"></i>
                 <h6 class="mt-10">Subir Material</h6>
               </div>
             </div>
 
             <div class="col-lg-4">
               <div class="card-style mb-30 text-center">
-                <i class="lni lni-checkmark-circle" style="font-size:36px;color:#4CAF50;"></i>
+                <i class="mdi mdi-check-circle-outline" style="font-size:36px;color:#4CAF50;"></i>
                 <h6 class="mt-10">Registrar Notas</h6>
               </div>
             </div>
@@ -523,9 +526,8 @@ $solicitudes = $controller->getSolicitudesReset();
     <?php require_once('../layout/footer.php'); ?>
   </main>
   <!-- ======== main-wrapper end =========== -->
-   NO FUNCIONA EL SONIDO DE NOTIFICACIÓN, REVISAR RUTA Y FORMATO DEL ARCHIVO MP3
 
-  <audio id="sonidoNotificacion" src="../../../assets/sounds/Juan Luis Guerra 4.40 - Vale la Pena (Live) (Video Oficial).mp3" preload="auto"></audio>
+  <audio id="sonidoNotificacion" src="../../../assets/sounds/notify.mp3" preload="auto"></audio>
 
   <!-- ========= All Javascript files linkup ======== -->
   <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
@@ -539,7 +541,23 @@ $solicitudes = $controller->getSolicitudesReset();
   <script src="../../../assets/js/main.js"></script>
 
   <script>
-    let cantidadAnterior = <?php echo $noLeidas; ?>;
+    let audioHabilitado = false;
+
+    document.addEventListener("click", function activarAudio() {
+      if (!audioHabilitado) {
+        audioHabilitado = true;
+        console.log("Audio habilitado por interacción del usuario");
+      }
+
+      document.removeEventListener("click", activarAudio);
+    });
+
+
+
+    let cantidadAnterior = <?php echo count(array_filter($solicitudes, function ($s) {
+                              return $s['estado'] == 0;
+                            })); ?>;
+
 
     function actualizarNotificaciones() {
       fetch("../../controllers/NotificacionesController.php")
@@ -557,38 +575,46 @@ $solicitudes = $controller->getSolicitudesReset();
 
           // sonido si hay nuevas
           if (noLeidas > cantidadAnterior) {
-            document.getElementById("sonidoNotificacion").play();
+            if (audioHabilitado) {
+              let audio = document.getElementById("sonidoNotificacion");
+
+              if (audio) {
+                audio.currentTime = 0;
+                audio.play().catch(() => {});
+              }
+            }
           }
 
           cantidadAnterior = noLeidas;
 
           // actualizar tabla
-          let tbody = document.querySelector("#tablaReset tbody");
-          tbody.innerHTML = "";
+          let tabla = $('#tablaReset').DataTable();
+          tabla.clear();
 
           data.forEach(s => {
 
             let color = s.estado == 0 ? "#656769" : "#15df07";
-            let icono = s.estado == 0 ? "lni-envelope" : "lni-checkmark-circle";
+            let icono = s.estado == 0 ? "mdi-email-outline" : "mdi-check-circle-outline";
             let boton = s.estado == 0 ?
               `<button onclick="marcarLeido(${s.id})"
-              style="width:34px;height:34px;border-radius:50%;border:1.5px solid ${color};background:${color};color:#fff;">
-              <i class="lni ${icono}"></i>
-            </button>` :
+    style="width:34px;height:34px;border-radius:50%;border:1.5px solid ${color};background:${color};color:#fff;">
+    <i class="mdi ${icono}"></i>
+  </button>` :
               `<button
-              style="width:34px;height:34px;border-radius:50%;border:1.5px solid ${color};background:${color};color:#fff;">
-              <i class="lni ${icono}"></i>
-            </button>`;
+    style="width:34px;height:34px;border-radius:50%;border:1.5px solid ${color};background:${color};color:#fff;">
+    <i class="mdi ${icono}"></i>
+  </button>`;
 
-            tbody.innerHTML += `
-          <tr>
-            <td>${s.usuario}</td>
-            <td>${s.mensaje}</td>
-            <td>${s.fecha_solicitud}</td>
-            <td style="text-align:center;">${boton}</td>
-          </tr>
-        `;
+            tabla.row.add([
+              s.usuario,
+              s.mensaje,
+              s.fecha_solicitud,
+              `<div style="text-align:center;">${boton}</div>`
+            ]);
           });
+
+          tabla.draw(false);
+
 
         });
     }
@@ -611,12 +637,17 @@ $solicitudes = $controller->getSolicitudesReset();
     $(document).ready(function() {
 
       function iniciarTabla(idTabla) {
+
+        if ($.fn.DataTable.isDataTable(idTabla)) {
+          $(idTabla).DataTable().destroy();
+        }
+
         $(idTabla).DataTable({
           pageLength: 5,
           lengthChange: false,
           ordering: true,
           searching: true,
-          info: false, // 🔴 ELIMINA "Mostrando X a X..."
+          info: false,
           autoWidth: false,
           responsive: true,
           language: {
@@ -633,6 +664,7 @@ $solicitudes = $controller->getSolicitudesReset();
             "<'row mt-3'<'col-12 text-end'p>>"
         });
       }
+
 
       iniciarTabla('#tablaReset');
       iniciarTabla('#tablaActividades');

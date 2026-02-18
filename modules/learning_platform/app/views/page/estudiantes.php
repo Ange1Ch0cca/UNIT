@@ -1,8 +1,18 @@
 <?php
 require_once "../../../config/session.php";
+require_once "../../controllers/DashboardController.php";
+
+$controller = new DashboardController();
+
 $userId = $_SESSION['id'];
 $rol = $_SESSION['rol'];
+
+$data = $controller->getDashboardData($userId, $rol);
+$estudiantes = $controller->getUsuariosPorRol(3); // 3 = rol estudiante
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -16,9 +26,7 @@ $rol = $_SESSION['rol'];
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../../../assets/css/lineicons.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="../../../assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="../../../assets/css/fullcalendar.css" />
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="../../../assets/css/main.css" />
     <link rel="stylesheet" href="../../../assets/css/style.css">
@@ -82,117 +90,11 @@ $rol = $_SESSION['rol'];
 
                 <!-- ===============SOLO ADMIN - RESUMEN GENERAL (6 CARDS)================== -->
                 <?php if ($rol === 'admin'): ?>
-                    <div class="row" style="row-gap:15px; margin-bottom:30px;">
-
-                        <!-- Alumnos -->
-                        <div class="col-lg-2 col-4 d-flex">
-                            <div style="width:100%; background:#fff; border-radius:12px; padding:18px; 
-                box-shadow:0 4px 12px rgba(0,0,0,0.06); 
-                border-left:5px solid #4CAF50;
-                display:flex; align-items:center; justify-content:space-between;">
-
-                                <div style="min-width:0;">
-                                    <h6 style="font-size:14px; color:#6c757d; margin-bottom:5px;">Alumnos</h6>
-                                    <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_estudiantes']; ?></h3>
-                                </div>
-
-                                <i class="lni lni-users"
-                                    style="font-size:28px; color:#4CAF50; flex-shrink:0;"></i>
-                            </div>
-                        </div>
-
-                        <!-- Actividades -->
-                        <div class="col-lg-2 col-4 d-flex">
-                            <div style="width:100%; background:#fff; border-radius:12px; padding:18px; 
-                box-shadow:0 4px 12px rgba(0,0,0,0.06); 
-                border-left:5px solid #2196F3;
-                display:flex; align-items:center; justify-content:space-between;">
-
-                                <div style="min-width:0;">
-                                    <h6 style="font-size:14px; color:#6c757d; margin-bottom:5px;">Actividades</h6>
-                                    <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_actividades']; ?></h3>
-                                </div>
-
-                                <i class="lni lni-write"
-                                    style="font-size:28px; color:#2196F3; flex-shrink:0;"></i>
-                            </div>
-                        </div>
-
-                        <!-- Materiales -->
-                        <div class="col-lg-2 col-4 d-flex">
-                            <div style="width:100%; background:#fff; border-radius:12px; padding:18px; 
-                box-shadow:0 4px 12px rgba(0,0,0,0.06); 
-                border-left:5px solid #FF9800;
-                display:flex; align-items:center; justify-content:space-between;">
-
-                                <div style="min-width:0;">
-                                    <h6 style="font-size:14px; color:#6c757d; margin-bottom:5px;">Materiales</h6>
-                                    <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_materiales']; ?></h3>
-                                </div>
-
-                                <i class="lni lni-folder"
-                                    style="font-size:28px; color:#FF9800; flex-shrink:0;"></i>
-                            </div>
-                        </div>
-
-                        <!-- Grados -->
-                        <div class="col-lg-2 col-4 d-flex">
-                            <div style="width:100%; background:#fff; border-radius:12px; padding:18px; 
-                box-shadow:0 4px 12px rgba(0,0,0,0.06); 
-                border-left:5px solid #9C27B0;
-                display:flex; align-items:center; justify-content:space-between;">
-
-                                <div style="min-width:0;">
-                                    <h6 style="font-size:14px; color:#6c757d; margin-bottom:5px;">Grados</h6>
-                                    <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_grados']; ?></h3>
-                                </div>
-
-                                <i class="lni lni-graduation"
-                                    style="font-size:28px; color:#9C27B0; flex-shrink:0;"></i>
-                            </div>
-                        </div>
-
-                        <!-- Cursos -->
-                        <div class="col-lg-2 col-4 d-flex">
-                            <div style="width:100%; background:#fff; border-radius:12px; padding:18px; 
-                box-shadow:0 4px 12px rgba(0,0,0,0.06); 
-                border-left:5px solid #F44336;
-                display:flex; align-items:center; justify-content:space-between;">
-
-                                <div style="min-width:0;">
-                                    <h6 style="font-size:14px; color:#6c757d; margin-bottom:5px;">Cursos</h6>
-                                    <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_cursos']; ?></h3>
-                                </div>
-
-                                <i class="lni lni-book"
-                                    style="font-size:28px; color:#F44336; flex-shrink:0;"></i>
-                            </div>
-                        </div>
-
-                        <!-- Docentes -->
-                        <div class="col-lg-2 col-4 d-flex">
-                            <div style="width:100%; background:#fff; border-radius:12px; padding:18px; 
-                box-shadow:0 4px 12px rgba(0,0,0,0.06); 
-                border-left:5px solid #00BCD4;
-                display:flex; align-items:center; justify-content:space-between;">
-
-                                <div style="min-width:0;">
-                                    <h6 style="font-size:14px; color:#6c757d; margin-bottom:5px;">Docentes</h6>
-                                    <h3 style="font-size:22px; font-weight:600; margin:0;"><?php echo $data['total_docentes']; ?></h3>
-                                </div>
-
-                                <i class="lni lni-blackboard"
-                                    style="font-size:28px; color:#00BCD4; flex-shrink:0;"></i>
-                            </div>
-                        </div>
-
-                    </div>
-
 
                     <!-- ===============================
-     RESET PASSWORD (TABLA)
+     ESTUDIANTES (TABLA)
 ================================= -->
-                    <div class="row" style="margin-top:25px; margin-bottom:30px;">
+                    <div class="row" style="margin-bottom:30px;">
                         <div class="col-12">
 
                             <div style="background:#ffffff;
@@ -203,50 +105,155 @@ $rol = $_SESSION['rol'];
 
                                 <!-- Título -->
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap;">
-                                    <h6 style="margin:0; font-weight:600; font-size:16px; color:#2c3e50;">
-                                        Solicitudes de Reset Password
-                                    </h6>
+                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+
+                                        <a href="add_estudiante.php"
+                                            class="btn btn-primary"
+                                            style="border-radius:8px; padding:6px 18px; font-weight:500;">
+
+                                            <i class="mdi mdi-account-plus" style="font-size:20px; vertical-align:middle; margin-right:6px;"></i>
+                                            AGREGAR
+                                        </a>
+
+
+
+                                        <div id="buscadorContainer" style="margin-left:15px;"></div>
+
+
+                                    </div>
+
                                 </div>
 
                                 <!-- Tabla -->
                                 <div class="table-responsive">
                                     <table id="tablaReset"
                                         class="table align-middle"
-                                        style="width:100%; border-collapse:separate; border-spacing:0 8px;">
+                                        style="width:100%;">
+
 
                                         <thead>
                                             <tr style="background:#f8f9fa;">
-                                                <th style="border:none; font-size:13px; color:#6c757d;">Usuario</th>
-                                                <th style="border:none; font-size:13px; color:#6c757d;">Mensaje</th>
-                                                <th style="border:none; font-size:13px; color:#6c757d;">Fecha</th>
-                                                <th style="border:none; font-size:13px; color:#6c757d; width:90px; text-align:center;">
-                                                    Estado
-                                                </th>
+                                                <th>Foto</th>
+                                                <th>Usuario</th>
+                                                <th>Nombre</th>
+                                                <th>Apellido</th>
+                                                <th style="text-align:center;">Estado</th>
+                                                <th style="text-align:center;">Acción</th>
                                             </tr>
                                         </thead>
 
+
                                         <tbody>
-                                            <?php foreach ($solicitudes as $s): ?>
-                                                <tr style="background:#ffffff; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-                                                    <td><?php echo htmlspecialchars($s['usuario']); ?></td>
-                                                    <td><?php echo htmlspecialchars($s['mensaje']); ?></td>
-                                                    <td><?php echo $s['fecha_solicitud']; ?></td>
-                                                    <td style="text-align:center;">
-                                                        <?php if ($s['estado'] == 0): ?>
-                                                            <button onclick="marcarLeido(<?php echo $s['id']; ?>)"
-                                                                style="width:34px;height:34px;border-radius:50%;border:1.5px solid #656769;background:#656769;color:#fff;">
-                                                                <i class="lni lni-envelope"></i>
-                                                            </button>
+                                            <?php foreach ($estudiantes as $e): ?>
+                                                <tr>
+                                                    <td>
+                                                        <?php
+                                                        $nombre = $e['nombres']; // nombre completo del usuario
+                                                        $inicial = strtoupper(substr(trim($nombre), 0, 1));
+
+                                                        // Generar un color llamativo pero agradable usando HSL
+                                                        $hue = rand(0, 360);          // tono al azar
+                                                        $saturation = rand(60, 75);   // saturación media-alta
+                                                        $lightness = rand(45, 55);    // luminosidad equilibrada
+                                                        $colorFondo = "hsl($hue, {$saturation}%, {$lightness}%)";
+                                                        ?>
+
+                                                        <?php if (!empty($e['foto'])): ?>
+                                                            <img src="<?php echo $e['foto']; ?>"
+                                                                style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                                         <?php else: ?>
-                                                            <button
-                                                                style="width:34px;height:34px;border-radius:50%;border:1.5px solid #15df07;background:#15df07;color:#fff;">
-                                                                <i class="lni lni-checkmark-circle"></i>
-                                                            </button>
+                                                            <div style="
+        width:40px;
+        height:40px;
+        border-radius:50%;
+        background:<?php echo $colorFondo; ?>;
+        color:#fff;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-weight:bold;
+        font-size:16px;">
+                                                                <?php echo $inicial; ?>
+                                                            </div>
                                                         <?php endif; ?>
                                                     </td>
+
+
+
+                                                    <td><?php echo htmlspecialchars($e['usuario']); ?></td>
+                                                    <td><?php echo htmlspecialchars($e['nombres']); ?></td>
+                                                    <td><?php echo htmlspecialchars($e['apellidos']); ?></td>
+
+                                                    <!-- ESTADO -->
+                                                    <td style="text-align:center;">
+                                                        <?php
+                                                        $estado = $e['estado'];
+
+                                                        if ($estado == 1) {
+                                                            $color = "#198754";
+                                                            $icon = "mdi-check-circle-outline";
+                                                            $texto = "Activo";
+                                                        } elseif ($estado == 2) {
+                                                            $color = "#fd7e14";
+                                                            $icon = "mdi-lock";
+                                                            $texto = "Bloqueado";
+                                                        } else {
+                                                            $color = "#dc3545";
+                                                            $icon = "mdi-close-circle";
+                                                            $texto = "Inactivo";
+                                                        }
+                                                        ?>
+
+                                                        <button onclick="cambiarEstado(<?php echo $e['id']; ?>, <?php echo $estado; ?>)"
+                                                            style="border:none;
+        background:<?php echo $color; ?>;
+        color:#fff;
+        padding:5px 10px;
+        border-radius:8px;
+        font-size:12px;">
+
+                                                            <i class="mdi <?php echo $icon; ?>" style="font-size:16px; vertical-align:middle; margin-right:4px;"></i>
+                                                            <?php echo $texto; ?>
+                                                        </button>
+                                                    </td>
+
+
+                                                    <!-- ACCION -->
+                                                    <td style="text-align:center;">
+
+                                                        <!-- VER INFO -->
+                                                        <button title="Ver información"
+                                                            onclick="verUsuario(<?php echo $e['id']; ?>)"
+                                                            style="background:#17a2b8; color:#fff; border:none;
+        padding:6px 8px; border-radius:8px;">
+                                                            <i class="mdi mdi-eye" style="font-size:18px;"></i>
+                                                        </button>
+
+                                                        <!-- Editar -->
+                                                        <button title="Editar"
+                                                            onclick="editarUsuario(<?php echo $e['id']; ?>)"
+                                                            style="background:#6f42c1; color:#fff; border:none;
+        padding:6px 8px; border-radius:8px;">
+                                                            <i class="mdi mdi-pencil" style="font-size:18px;"></i>
+                                                        </button>
+
+                                                        <?php if ($estado != 3): ?>
+                                                            <!-- Inactivar -->
+                                                            <button title="Inactivar"
+                                                                onclick="inactivarUsuario(<?php echo $e['id']; ?>)"
+                                                                style="background:#dc3545; color:#fff; border:none;
+            padding:6px 8px; border-radius:8px;">
+                                                                <i class="mdi mdi-account-off" style="font-size:18px;"></i>
+                                                            </button>
+                                                        <?php endif; ?>
+
+                                                    </td>
+
+
                                                 </tr>
                                             <?php endforeach; ?>
                                         </tbody>
+
 
 
                                     </table>
@@ -257,6 +264,7 @@ $rol = $_SESSION['rol'];
                     </div>
 
                 <?php endif; ?>
+
                 <!-- ========== Bloque_contenido_end ========== -->
 
             </div>
@@ -268,6 +276,44 @@ $rol = $_SESSION['rol'];
     </main>
     <!-- ======== main-wrapper end =========== -->
 
+    <div id="modalUsuario" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+justify-content:center;
+align-items:center;
+z-index:9999;">
+
+        <div style="
+    background:white;
+    width:90%;
+    max-width:700px;
+    border-radius:12px;
+    padding:25px;
+    position:relative;
+    display:flex;
+    flex-wrap:wrap;
+    gap:30px;">
+
+            <span onclick="cerrarModal()"
+                style="position:absolute;right:15px;top:10px;
+              font-size:22px;cursor:pointer;">&times;</span>
+
+            <div id="modalFoto" style="
+        flex:1;
+        display:flex;
+        align-items:center;
+        justify-content:center;"></div>
+
+            <div id="modalDatos" style="flex:2;"></div>
+
+        </div>
+    </div>
+
     <!-- ========= All Javascript files linkup ======== -->
     <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../../assets/js/Chart.min.js"></script>
@@ -278,7 +324,214 @@ $rol = $_SESSION['rol'];
     <script src="../../../assets/js/world-merc.js"></script>
     <script src="../../../assets/js/polyfill.js"></script>
     <script src="../../../assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+    <script>
+        $(document).ready(function() {
+
+            let tabla = $('#tablaReset').DataTable({
+                pageLength: 10,
+                lengthChange: false,
+                ordering: true,
+                searching: true,
+                info: false,
+                autoWidth: false,
+                responsive: true,
+                language: {
+                    search: "",
+                    searchPlaceholder: "Buscar estudiante...",
+                    paginate: {
+                        next: "›",
+                        previous: "‹"
+                    },
+                    zeroRecords: "No se encontraron resultados"
+                },
+                dom: "<'row mb-3'<'col-md-6'f><'col-md-6 text-md-end'>>" +
+                    "<'row'<'col-12'tr>>" +
+                    "<'row mt-3'<'col-12 text-end'p>>"
+            });
+
+            // mover buscador al contenedor
+            $('#tablaReset_filter').appendTo('#buscadorContainer');
+
+        });
+
+
+        function cambiarEstado(id, estadoActual) {
+
+            let nuevoEstado;
+
+            if (estadoActual == 1) {
+                nuevoEstado = 2; // Activo → Bloqueado
+            } else {
+                nuevoEstado = 1; // Bloqueado o Inactivo → Activo
+            }
+
+            fetch("../../controllers/CambiarEstadoUsuarioController.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: "id=" + id + "&estado=" + nuevoEstado
+                })
+                .then(response => response.text())
+                .then(data => {
+
+                    if (data.trim() === "ok") {
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Estado actualizado',
+                            text: 'El estado del usuario fue cambiado correctamente.',
+                            confirmButtonColor: '#198754'
+                        }).then(() => {
+                            location.reload();
+                        });
+
+                    } else {
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'No se pudo actualizar el estado.'
+                        });
+
+                    }
+
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error inesperado',
+                        text: 'Ocurrió un problema en la petición.'
+                    });
+                });
+        }
+
+
+
+        function inactivarUsuario(id) {
+
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'El usuario será desactivado.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Sí, desactivar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            fetch("../../controllers/CambiarEstadoUsuarioController.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "id=" + id + "&estado=3"
+            })
+            .then(response => response.text())
+            .then(data => {
+
+                if (data.trim() === "ok") {
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Usuario inactivado',
+                        text: 'El estado fue actualizado correctamente.',
+                        confirmButtonColor: '#198754'
+                    }).then(() => {
+                        location.reload();
+                    });
+
+                } else {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'No se pudo desactivar el usuario.'
+                    });
+
+                }
+
+            });
+
+        }
+
+    });
+}
+
+
+        function editarUsuario(id) {
+            window.location.href = "editar_estudiante.php?id=" + id;
+        }
+
+        function verUsuario(id) {
+
+            fetch("../../services/obtener_usuario.php?id=" + id)
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data.error) {
+                        alert(data.error);
+                        return;
+                    }
+
+                    let fotoHTML = "";
+
+                    if (data.foto && data.foto !== "") {
+                        fotoHTML = `<img src="../../../resources/upload/photos/${data.foto}" 
+                        style="width:140px;height:140px;border-radius:50%;object-fit:cover;">`;
+                    } else {
+                        let inicial = data.nombres.charAt(0).toUpperCase();
+                        fotoHTML = `<div style="
+                        width:140px;
+                        height:140px;
+                        border-radius:50%;
+                        background:#6f42c1;
+                        color:white;
+                        font-size:55px;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;">
+                        ${inicial}
+                        </div>`;
+                    }
+
+                    document.getElementById("modalFoto").innerHTML = fotoHTML;
+
+                    document.getElementById("modalDatos").innerHTML = `
+    <p><strong>ID:</strong> ${data.id ?? ''}</p>
+    <p><strong>Usuario:</strong> ${data.usuario ?? ''}</p>
+    <p><strong>Rol:</strong> ${data.rol ?? ''}</p>
+    <p><strong>DNI:</strong> ${data.dni ?? ''}</p>
+    <p><strong>Nombres:</strong> ${data.nombres ?? ''}</p>
+    <p><strong>Apellidos:</strong> ${data.apellidos ?? ''}</p>
+    <p><strong>Correo:</strong> ${data.correo ?? ''}</p>
+    <p><strong>Celular:</strong> ${data.celular ?? ''}</p>
+    <p><strong>Estado:</strong> ${data.estado_texto ?? ''}</p>
+    <p><strong>Grado:</strong> ${data.grado_completo ?? ''}</p>
+    <p><strong>Fecha de ingreso:</strong> ${data.fecha_ingreso ?? ''}</p>
+    <p><strong>Fecha de registro:</strong> ${data.fecha_registro ?? ''}</p>
+`;
+
+
+                    document.getElementById("modalUsuario").style.display = "flex";
+
+                })
+                .catch(error => {
+                    console.error("Error al obtener usuario:", error);
+                });
+        }
+
+
+        function cerrarModal() {
+            document.getElementById("modalUsuario").style.display = "none";
+        }
+    </script>
 </body>
 
 </html>
