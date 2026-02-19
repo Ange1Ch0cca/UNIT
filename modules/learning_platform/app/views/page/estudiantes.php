@@ -22,7 +22,7 @@ $estudiantes = $controller->getUsuariosPorRol(3); // 3 = rol estudiante
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../../assets/images/favicon.svg" type="image/x-icon" />
-    <title>PlainAdmin Demo | Bootstrap 5 Admin Template</title>
+    <title>Estudiantes | Error404</title>
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css" />
@@ -413,56 +413,56 @@ z-index:9999;">
 
         function inactivarUsuario(id) {
 
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: 'El usuario será desactivado.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#dc3545',
-        cancelButtonColor: '#6c757d',
-        confirmButtonText: 'Sí, desactivar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'El usuario será desactivado.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, desactivar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
 
-        if (result.isConfirmed) {
+                if (result.isConfirmed) {
 
-            fetch("../../controllers/CambiarEstadoUsuarioController.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: "id=" + id + "&estado=3"
-            })
-            .then(response => response.text())
-            .then(data => {
+                    fetch("../../controllers/CambiarEstadoUsuarioController.php", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: "id=" + id + "&estado=3"
+                        })
+                        .then(response => response.text())
+                        .then(data => {
 
-                if (data.trim() === "ok") {
+                            if (data.trim() === "ok") {
 
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Usuario inactivado',
-                        text: 'El estado fue actualizado correctamente.',
-                        confirmButtonColor: '#198754'
-                    }).then(() => {
-                        location.reload();
-                    });
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Usuario inactivado',
+                                    text: 'El estado fue actualizado correctamente.',
+                                    confirmButtonColor: '#198754'
+                                }).then(() => {
+                                    location.reload();
+                                });
 
-                } else {
+                            } else {
 
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'No se pudo desactivar el usuario.'
-                    });
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'No se pudo desactivar el usuario.'
+                                });
+
+                            }
+
+                        });
 
                 }
 
             });
-
         }
-
-    });
-}
 
 
         function editarUsuario(id) {
@@ -504,18 +504,18 @@ z-index:9999;">
                     document.getElementById("modalFoto").innerHTML = fotoHTML;
 
                     document.getElementById("modalDatos").innerHTML = `
-    <p><strong>ID:</strong> ${data.id ?? ''}</p>
-    <p><strong>Usuario:</strong> ${data.usuario ?? ''}</p>
-    <p><strong>Rol:</strong> ${data.rol ?? ''}</p>
-    <p><strong>DNI:</strong> ${data.dni ?? ''}</p>
-    <p><strong>Nombres:</strong> ${data.nombres ?? ''}</p>
-    <p><strong>Apellidos:</strong> ${data.apellidos ?? ''}</p>
-    <p><strong>Correo:</strong> ${data.correo ?? ''}</p>
-    <p><strong>Celular:</strong> ${data.celular ?? ''}</p>
-    <p><strong>Estado:</strong> ${data.estado_texto ?? ''}</p>
-    <p><strong>Grado:</strong> ${data.grado_completo ?? ''}</p>
-    <p><strong>Fecha de ingreso:</strong> ${data.fecha_ingreso ?? ''}</p>
-    <p><strong>Fecha de registro:</strong> ${data.fecha_registro ?? ''}</p>
+    <p><strong>ID:</strong> ${data.id ?? 'No registrada'}</p>
+    <p><strong>Usuario:</strong> ${data.usuario ?? 'No registrada'}</p>
+    <p><strong>Rol:</strong> ${data.rol ?? 'No registrada'}</p>
+    <p><strong>DNI:</strong> ${data.dni ?? 'No registrada'}</p>
+    <p><strong>Nombres:</strong> ${data.nombres ?? 'No registrada'}</p>
+    <p><strong>Apellidos:</strong> ${data.apellidos ?? 'No registrada'}</p>
+    <p><strong>Correo:</strong> ${data.correo ?? 'No registrada'}</p>
+    <p><strong>Celular:</strong> ${data.celular ?? 'No registrada'}</p>
+    <p><strong>Estado:</strong> ${data.estado_texto ?? 'No registrada'}</p>
+    <p><strong>Grado:</strong> ${data.grado_completo ?? 'No registrada'}</p>
+    <p><strong>Fecha de ingreso:</strong> ${data.fecha_ingreso ?? 'No registrada'}</p>
+    <p><strong>Fecha de registro:</strong> ${data.fecha_registro ?? 'No registrada'}</p>
 `;
 
 

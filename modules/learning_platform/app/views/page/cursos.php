@@ -22,7 +22,7 @@ $docentes = $controller->getDocentes();
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../../assets/images/favicon.svg" type="image/x-icon" />
-    <title>Docentes | Error404</title>
+    <title>Cursos | Error404</title>
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css" />
@@ -63,7 +63,7 @@ $docentes = $controller->getDocentes();
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="title">
-                                <h2>Docentes</h2>
+                                <h2>Cursos</h2>
                             </div>
                         </div>
                         <!-- end col -->
@@ -75,7 +75,7 @@ $docentes = $controller->getDocentes();
                                             <a href="dashboard.php">Dashboard</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">
-                                            Docentes
+                                            Cursos
                                         </li>
                                     </ol>
                                 </nav>
@@ -92,7 +92,7 @@ $docentes = $controller->getDocentes();
                 <?php if ($rol === 'admin'): ?>
 
                     <!-- ===============================
-     DOCENTES (TABLA)
+     CURSOS (TABLA)
 ================================= -->
                     <div class="row" style="margin-bottom:30px;">
                         <div class="col-12">
@@ -107,7 +107,7 @@ $docentes = $controller->getDocentes();
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap;">
                                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
 
-                                        <a href="add_docente.php"
+                                        <a href="add_curso.php"
                                             class="btn btn-primary"
                                             style="border-radius:8px; padding:6px 18px; font-weight:500;">
 
@@ -340,7 +340,7 @@ z-index:9999;">
                 responsive: true,
                 language: {
                     search: "",
-                    searchPlaceholder: "Buscar docente...",
+                    searchPlaceholder: "Buscar curso...",
                     paginate: {
                         next: "›",
                         previous: "‹"
@@ -466,7 +466,7 @@ z-index:9999;">
 
 
         function editarUsuario(id) {
-            window.location.href = "editar_docente.php?id=" + id;
+            window.location.href = "editar_curso.php?id=" + id;
         }
 
         function verUsuario(id) {

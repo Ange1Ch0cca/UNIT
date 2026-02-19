@@ -202,13 +202,24 @@ public function getUsuarioPorId($id){
                 u.estado,
                 u.fecha_registro,
                 r.nombre AS rol,
-                e.fecha_ingreso,
+
+                -- DATOS ESTUDIANTE
+                e.fecha_ingreso AS fecha_ingreso_estudiante,
                 g.nombre_grado,
-                g.seccion
+                g.seccion,
+
+                -- DATOS DOCENTE
+                d.profesion,
+                d.fecha_ingreso AS fecha_ingreso_docente
+
             FROM usuarios u
             LEFT JOIN roles r ON u.rol_id = r.id
+
             LEFT JOIN estudiantes e ON u.id = e.usuario_id
             LEFT JOIN grados g ON e.grado_id = g.id
+
+            LEFT JOIN docentes d ON u.id = d.usuario_id
+
             WHERE u.id = ?";
 
     $stmt = $this->conn->prepare($sql);
@@ -218,6 +229,7 @@ public function getUsuarioPorId($id){
 
     if($usuario){
 
+        // Estado bonito
         if($usuario['estado'] == 1){
             $usuario['estado_texto'] = "Activo";
         } elseif($usuario['estado'] == 2){
@@ -226,17 +238,25 @@ public function getUsuarioPorId($id){
             $usuario['estado_texto'] = "Inactivo";
         }
 
-        // Grado completo
-        if($usuario['nombre_grado']){
-            $usuario['grado_completo'] = $usuario['nombre_grado'] . " - " . $usuario['seccion'];
-        } else {
-            $usuario['grado_completo'] = "No asignado";
+        // Si es estudiante
+        if($usuario['rol'] == 'estudiante'){
+            $usuario['fecha_ingreso'] = $usuario['fecha_ingreso_estudiante'];
+            $usuario['grado_completo'] = 
+                $usuario['nombre_grado'] 
+                ? $usuario['nombre_grado'] . " - " . $usuario['seccion']
+                : "No asignado";
+        }
+
+        // Si es docente
+        if($usuario['rol'] == 'docente'){
+            $usuario['fecha_ingreso'] = $usuario['fecha_ingreso_docente'];
         }
 
     }
 
     return $usuario;
 }
+
 
 
 
@@ -255,6 +275,55 @@ public function actualizarEstadoUsuario($id, $estado){
 
     return $stmt->execute([$estado, $id]);
 }
+
+public function getDocentes(){
+
+    $sql = "SELECT 
+                u.id,
+                u.usuario,
+                u.dni,
+                u.nombres,
+                u.apellidos,
+                u.correo,
+                u.celular,
+                u.foto,
+                u.estado,
+                d.id AS docente_id,
+                d.profesion
+            FROM usuarios u
+            INNER JOIN docentes d ON d.usuario_id = u.id
+            WHERE u.rol_id = 2
+            ORDER BY u.id DESC";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
+
+    $docentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($docentes as &$d){
+        $d['estado_texto'] = ($d['estado'] == 1) ? "Activo" : "Inactivo";
+    }
+
+    return $docentes;
+}
+
+public function getCursosPorDocente($docente_id){
+
+    $sql = "SELECT 
+                c.nombre AS curso,
+                g.nombre_grado,
+                g.seccion
+            FROM curso_grado_docente cgd
+            INNER JOIN cursos c ON c.id = cgd.curso_id
+            INNER JOIN grados g ON g.id = cgd.grado_id
+            WHERE cgd.docente_id = ?";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([$docente_id]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
 
 }
