@@ -324,6 +324,72 @@ public function getCursosPorDocente($docente_id){
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+public function getCursosAsignados(){
+
+    $sql = "SELECT 
+                cgd.id,
+                c.nombre AS curso,
+                g.nombre_grado,
+                g.seccion,
+                u.nombres,
+                u.apellidos
+            FROM curso_grado_docente cgd
+            INNER JOIN cursos c ON cgd.curso_id = c.id
+            INNER JOIN grados g ON cgd.grado_id = g.id
+            INNER JOIN docentes d ON cgd.docente_id = d.id
+            INNER JOIN usuarios u ON d.usuario_id = u.id
+            ORDER BY c.nombre ASC";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function eliminarAsignacion($id){
+
+    $sql = "DELETE FROM curso_grado_docente WHERE id = ?";
+    $stmt = $this->conn->prepare($sql);
+
+    return $stmt->execute([$id]);
+}
+
+public function getCursos(){
+
+    $sql = "SELECT id, nombre, descripcion, foto_portada, estado
+            FROM cursos
+            ORDER BY nombre ASC";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function cambiarEstadoCurso($id, $estado){
+
+    $sql = "UPDATE cursos SET estado = ? WHERE id = ?";
+    $stmt = $this->conn->prepare($sql);
+
+    return $stmt->execute([$estado, $id]);
+}
+
+public function getGrados(){
+
+    $sql = "SELECT id, nombre_grado, seccion, estado FROM grados";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+}
+
+public function cambiarEstadoGrado($id, $estado){
+
+    $sql = "UPDATE grados SET estado = ? WHERE id = ?";
+    $stmt = $this->conn->prepare($sql);
+
+    return $stmt->execute([$estado, $id]);
+}
 
 
 }

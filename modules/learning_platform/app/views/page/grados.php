@@ -12,7 +12,8 @@ $controller = new DashboardController($conn);
 
 $rol = $_SESSION['rol'];
 
-$cursos = $controller->getCursos();
+$grados = $controller->getGrados();
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +24,7 @@ $cursos = $controller->getCursos();
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../../assets/images/favicon.svg" type="image/x-icon" />
-    <title>Cursos | Error404</title>
+    <title>Grados | Error404</title>
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css" />
@@ -64,7 +65,7 @@ $cursos = $controller->getCursos();
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="title">
-                                <h2>Cursos</h2>
+                                <h2>Grados</h2>
                             </div>
                         </div>
                         <!-- end col -->
@@ -76,7 +77,7 @@ $cursos = $controller->getCursos();
                                             <a href="dashboard.php">Dashboard</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">
-                                            Cursos
+                                            Grados
                                         </li>
                                     </ol>
                                 </nav>
@@ -93,7 +94,7 @@ $cursos = $controller->getCursos();
                 <?php if ($rol === 'admin'): ?>
 
                     <!-- ===============================
-     CURSOS (TABLA)
+     GRADOS (TABLA)
 ================================= -->
                     <div class="row" style="margin-bottom:30px;">
                         <div class="col-12">
@@ -108,11 +109,11 @@ $cursos = $controller->getCursos();
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap;">
                                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
 
-                                        <a href="add_curso.php"
+                                        <a href="add_grado.php"
                                             class="btn btn-primary"
                                             style="border-radius:8px; padding:6px 18px; font-weight:500;">
 
-                                            <i class="mdi mdi-book-plus" style="font-size:20px; vertical-align:middle; margin-right:6px;"></i>
+                                            <i class="mdi mdi-school" style="font-size:20px; vertical-align:middle; margin-right:6px;"></i>
                                             AGREGAR
                                         </a>
 
@@ -134,58 +135,49 @@ $cursos = $controller->getCursos();
 
                                         <thead>
                                             <tr style="background:#f8f9fa;">
-                                                <th>Portada</th>
-                                                <th>Nombre</th>
-                                                <th>Descripción</th>
+                                                <th>ID</th>
+                                                <th>Nombre del Grado</th>
+                                                <th>Sección</th>
                                                 <th style="text-align:center;">Estado</th>
                                                 <th style="text-align:center;">Acción</th>
                                             </tr>
                                         </thead>
 
 
-
                                         <tbody>
-                                            <?php foreach ($cursos as $curso): ?>
+                                            <?php foreach ($grados as $grado): ?>
                                                 <tr>
 
-                                                    <!-- FOTO PORTADA -->
-                                                    <td>
-                                                        <?php if (!empty($curso['foto_portada'])): ?>
-                                                            <img src="../../../resources/upload/covers/<?= $curso['foto_portada'] ?>"
-                                                                style="width:60px;height:60px;object-fit:cover;border-radius:8px;">
-                                                        <?php else: ?>
-                                                            <span class="badge bg-secondary">Sin imagen</span>
-                                                        <?php endif; ?>
-                                                    </td>
+                                                    <!-- ID -->
+                                                    <td><?= $grado['id'] ?></td>
 
-                                                    <!-- NOMBRE -->
-                                                    <td><?= htmlspecialchars($curso['nombre']) ?></td>
+                                                    <!-- NOMBRE GRADO -->
+                                                    <td><?= htmlspecialchars($grado['nombre_grado']) ?></td>
 
-                                                    <!-- DESCRIPCIÓN -->
-                                                    <td><?= htmlspecialchars($curso['descripcion']) ?></td>
+                                                    <!-- SECCION -->
+                                                    <td><?= htmlspecialchars($grado['seccion']) ?></td>
 
                                                     <!-- ESTADO -->
                                                     <td style="text-align:center;">
-                                                        <?php if ($curso['estado'] == 1): ?>
+                                                        <?php if ($grado['estado'] == 1): ?>
                                                             <span class="badge bg-success"
                                                                 style="cursor:pointer;"
-                                                                onclick="cambiarEstadoCurso(<?= $curso['id'] ?>, 0)">
+                                                                onclick="cambiarEstadoGrado(<?= $grado['id'] ?>, 0)">
                                                                 Activo
                                                             </span>
                                                         <?php else: ?>
                                                             <span class="badge bg-danger"
                                                                 style="cursor:pointer;"
-                                                                onclick="cambiarEstadoCurso(<?= $curso['id'] ?>, 1)">
+                                                                onclick="cambiarEstadoGrado(<?= $grado['id'] ?>, 1)">
                                                                 Inactivo
                                                             </span>
                                                         <?php endif; ?>
                                                     </td>
 
-
                                                     <!-- ACCIONES -->
                                                     <td style="text-align:center;">
                                                         <button class="btn btn-sm btn-warning"
-                                                            onclick="editarCurso(<?= $curso['id'] ?>)">
+                                                            onclick="editarGrado(<?= $grado['id'] ?>)">
                                                             <i class="mdi mdi-pencil"></i>
                                                         </button>
                                                     </td>
@@ -193,6 +185,7 @@ $cursos = $controller->getCursos();
                                                 </tr>
                                             <?php endforeach; ?>
                                         </tbody>
+
 
                                     </table>
                                 </div>
@@ -257,16 +250,16 @@ $cursos = $controller->getCursos();
 
         });
 
-        function editarCurso(id) {
-            window.location.href = "editar_curso.php?id=" + id;
+        function editarGrado(id) {
+            window.location.href = "editar_grado.php?id=" + id;
         }
 
-        function cambiarEstadoCurso(id, nuevoEstado) {
+        function cambiarEstadoGrado(id, nuevoEstado) {
 
             let texto = nuevoEstado == 1 ? "activar" : "desactivar";
 
             Swal.fire({
-                title: '¿Deseas ' + texto + ' este curso?',
+                title: '¿Deseas ' + texto + ' este grado?',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Sí',
@@ -275,7 +268,7 @@ $cursos = $controller->getCursos();
 
                 if (result.isConfirmed) {
 
-                    fetch("../../controllers/CambiarEstadoCursoController.php", {
+                    fetch("../../controllers/CambiarEstadoGradoController.php", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/x-www-form-urlencoded"
@@ -284,10 +277,8 @@ $cursos = $controller->getCursos();
                         })
                         .then(response => response.text())
                         .then(data => {
-                            console.log(data);
                             location.reload();
                         });
-
 
                 }
             });

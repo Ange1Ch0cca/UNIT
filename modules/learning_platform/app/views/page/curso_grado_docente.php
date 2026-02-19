@@ -1,19 +1,18 @@
 <?php
 require_once "../../../config/session.php";
-require_once "../../../config/database.php";
 require_once "../../controllers/DashboardController.php";
 
-// Crear instancia de la clase Database
-$database = new Database();
-$conn = $database->conectar();
+$controller = new DashboardController();
 
-// Crear controlador con la conexión
-$controller = new DashboardController($conn);
-
+$userId = $_SESSION['id'];
 $rol = $_SESSION['rol'];
 
-$cursos = $controller->getCursos();
+$data = $controller->getDashboardData($userId, $rol);
+$cursos = $controller->getCursosAsignados();
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -23,7 +22,7 @@ $cursos = $controller->getCursos();
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../../assets/images/favicon.svg" type="image/x-icon" />
-    <title>Cursos | Error404</title>
+    <title>Asignación C.G.D. | Error404</title>
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css" />
@@ -64,7 +63,7 @@ $cursos = $controller->getCursos();
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="title">
-                                <h2>Cursos</h2>
+                                <h2>Asignación C.G.D.</h2>
                             </div>
                         </div>
                         <!-- end col -->
@@ -76,7 +75,7 @@ $cursos = $controller->getCursos();
                                             <a href="dashboard.php">Dashboard</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">
-                                            Cursos
+                                            CGD
                                         </li>
                                     </ol>
                                 </nav>
@@ -108,12 +107,12 @@ $cursos = $controller->getCursos();
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap;">
                                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
 
-                                        <a href="add_curso.php"
+                                        <a href="add_curso_grado_docente.php"
                                             class="btn btn-primary"
                                             style="border-radius:8px; padding:6px 18px; font-weight:500;">
 
-                                            <i class="mdi mdi-book-plus" style="font-size:20px; vertical-align:middle; margin-right:6px;"></i>
-                                            AGREGAR
+                                            <i class="mdi mdi-account-plus" style="font-size:20px; vertical-align:middle; margin-right:6px;"></i>
+                                            ASIGNAR
                                         </a>
 
 
@@ -134,65 +133,48 @@ $cursos = $controller->getCursos();
 
                                         <thead>
                                             <tr style="background:#f8f9fa;">
-                                                <th>Portada</th>
-                                                <th>Nombre</th>
-                                                <th>Descripción</th>
-                                                <th style="text-align:center;">Estado</th>
+                                                <th>Curso</th>
+                                                <th>Grado</th>
+                                                <th>Docente</th>
                                                 <th style="text-align:center;">Acción</th>
                                             </tr>
                                         </thead>
 
 
 
+
                                         <tbody>
                                             <?php foreach ($cursos as $curso): ?>
                                                 <tr>
+                                                    <td><?= $curso['curso'] ?></td>
 
-                                                    <!-- FOTO PORTADA -->
                                                     <td>
-                                                        <?php if (!empty($curso['foto_portada'])): ?>
-                                                            <img src="../../../resources/upload/covers/<?= $curso['foto_portada'] ?>"
-                                                                style="width:60px;height:60px;object-fit:cover;border-radius:8px;">
-                                                        <?php else: ?>
-                                                            <span class="badge bg-secondary">Sin imagen</span>
-                                                        <?php endif; ?>
+                                                        <?= $curso['nombre_grado'] . " - " . $curso['seccion'] ?>
                                                     </td>
 
-                                                    <!-- NOMBRE -->
-                                                    <td><?= htmlspecialchars($curso['nombre']) ?></td>
-
-                                                    <!-- DESCRIPCIÓN -->
-                                                    <td><?= htmlspecialchars($curso['descripcion']) ?></td>
-
-                                                    <!-- ESTADO -->
-                                                    <td style="text-align:center;">
-                                                        <?php if ($curso['estado'] == 1): ?>
-                                                            <span class="badge bg-success"
-                                                                style="cursor:pointer;"
-                                                                onclick="cambiarEstadoCurso(<?= $curso['id'] ?>, 0)">
-                                                                Activo
-                                                            </span>
-                                                        <?php else: ?>
-                                                            <span class="badge bg-danger"
-                                                                style="cursor:pointer;"
-                                                                onclick="cambiarEstadoCurso(<?= $curso['id'] ?>, 1)">
-                                                                Inactivo
-                                                            </span>
-                                                        <?php endif; ?>
+                                                    <td>
+                                                        <?= $curso['nombres'] . " " . $curso['apellidos'] ?>
                                                     </td>
 
-
-                                                    <!-- ACCIONES -->
                                                     <td style="text-align:center;">
+                                                        <!-- Botón Editar -->
                                                         <button class="btn btn-sm btn-warning"
-                                                            onclick="editarCurso(<?= $curso['id'] ?>)">
+                                                            onclick="editarAsignacion(<?= $curso['id'] ?>)">
                                                             <i class="mdi mdi-pencil"></i>
                                                         </button>
-                                                    </td>
 
+                                                        <!-- Botón Eliminar -->
+                                                        <button class="btn btn-sm btn-danger"
+                                                            onclick="eliminarAsignacion(<?= $curso['id'] ?>)">
+                                                            <i class="mdi mdi-delete"></i>
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         </tbody>
+
+
+
 
                                     </table>
                                 </div>
@@ -213,6 +195,44 @@ $cursos = $controller->getCursos();
         <?php require_once('../layout/footer.php'); ?>
     </main>
     <!-- ======== main-wrapper end =========== -->
+
+    <div id="modalUsuario" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+justify-content:center;
+align-items:center;
+z-index:9999;">
+
+        <div style="
+    background:white;
+    width:90%;
+    max-width:700px;
+    border-radius:12px;
+    padding:25px;
+    position:relative;
+    display:flex;
+    flex-wrap:wrap;
+    gap:30px;">
+
+            <span onclick="cerrarModal()"
+                style="position:absolute;right:15px;top:10px;
+              font-size:22px;cursor:pointer;">&times;</span>
+
+            <div id="modalFoto" style="
+        flex:1;
+        display:flex;
+        align-items:center;
+        justify-content:center;"></div>
+
+            <div id="modalDatos" style="flex:2;"></div>
+
+        </div>
+    </div>
 
     <!-- ========= All Javascript files linkup ======== -->
     <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
@@ -240,7 +260,7 @@ $cursos = $controller->getCursos();
                 responsive: true,
                 language: {
                     search: "",
-                    searchPlaceholder: "Buscar curso...",
+                    searchPlaceholder: "Buscar asignación...",
                     paginate: {
                         next: "›",
                         previous: "‹"
@@ -257,37 +277,40 @@ $cursos = $controller->getCursos();
 
         });
 
-        function editarCurso(id) {
-            window.location.href = "editar_curso.php?id=" + id;
+        function editarAsignacion(id) {
+            window.location.href = "editar_curso_grado_docente.php?id=" + id;
         }
 
-        function cambiarEstadoCurso(id, nuevoEstado) {
-
-            let texto = nuevoEstado == 1 ? "activar" : "desactivar";
+        function eliminarAsignacion(id) {
 
             Swal.fire({
-                title: '¿Deseas ' + texto + ' este curso?',
-                icon: 'question',
+                title: '¿Eliminar asignación?',
+                text: "Esta acción no se puede deshacer",
+                icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Sí',
-                cancelButtonText: 'Cancelar'
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar'
             }).then((result) => {
 
                 if (result.isConfirmed) {
 
-                    fetch("../../controllers/CambiarEstadoCursoController.php", {
+                    fetch("../../controllers/EliminarCursoGradoDocenteController.php", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/x-www-form-urlencoded"
                             },
-                            body: "id=" + id + "&estado=" + nuevoEstado
+                            body: "id=" + id
                         })
-                        .then(response => response.text())
-                        .then(data => {
-                            console.log(data);
-                            location.reload();
+                        .then(() => {
+                            Swal.fire(
+                                'Eliminado',
+                                'La asignación fue eliminada correctamente.',
+                                'success'
+                            ).then(() => {
+                                location.reload();
+                            });
                         });
-
 
                 }
             });
