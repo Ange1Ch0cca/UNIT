@@ -8,7 +8,7 @@ $userId = $_SESSION['id'];
 $rol = $_SESSION['rol'];
 
 $data = $controller->getDashboardData($userId, $rol);
-$cursos = $controller->getCursosAsignados();
+$estudiantes = $controller->getEstudiantesConGrado();
 
 
 ?>
@@ -22,7 +22,7 @@ $cursos = $controller->getCursosAsignados();
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../../../assets/images/favicon.svg" type="image/x-icon" />
-    <title>Asignación C.G.D. | Error404</title>
+    <title>Asignación E.G. | Error404</title>
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css" />
@@ -63,7 +63,7 @@ $cursos = $controller->getCursosAsignados();
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="title">
-                                <h2>Asignación C.G.D.</h2>
+                                <h2>Asignación E.G.</h2>
                             </div>
                         </div>
                         <!-- end col -->
@@ -75,7 +75,7 @@ $cursos = $controller->getCursosAsignados();
                                             <a href="dashboard.php">Dashboard</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">
-                                            CGD
+                                            EG
                                         </li>
                                     </ol>
                                 </nav>
@@ -107,7 +107,7 @@ $cursos = $controller->getCursosAsignados();
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap;">
                                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
 
-                                        <a href="add_curso_grado_docente.php"
+                                        <a href="add_estudiante_grado.php"
                                             class="btn btn-primary"
                                             style="border-radius:8px; padding:6px 18px; font-weight:500;">
 
@@ -133,9 +133,9 @@ $cursos = $controller->getCursosAsignados();
 
                                         <thead>
                                             <tr style="background:#f8f9fa;">
-                                                <th>Curso</th>
+                                                <th>Estudiante</th>
                                                 <th>Grado</th>
-                                                <th>Docente</th>
+                                                <th>Fecha Ingreso</th>
                                                 <th style="text-align:center;">Acción</th>
                                             </tr>
                                         </thead>
@@ -144,28 +144,30 @@ $cursos = $controller->getCursosAsignados();
 
 
                                         <tbody>
-                                            <?php foreach ($cursos as $curso): ?>
+                                            <?php foreach ($estudiantes as $est): ?>
                                                 <tr>
-                                                    <td><?= $curso['curso'] ?></td>
-
                                                     <td>
-                                                        <?= $curso['nombre_grado'] . " - " . $curso['seccion'] ?>
+                                                        <?= $est['nombres'] . " " . $est['apellidos'] ?>
                                                     </td>
 
                                                     <td>
-                                                        <?= $curso['nombres'] . " " . $curso['apellidos'] ?>
+                                                        <?= $est['nombre_grado'] . " - " . $est['seccion'] ?>
                                                     </td>
+
+                                                    <td>
+    <?= !empty($est['fecha_ingreso']) 
+        ? date("d/m/Y", strtotime($est['fecha_ingreso'])) 
+        : '<span style="color:#888;">No ingresado</span>' ?>
+</td>
 
                                                     <td style="text-align:center;">
-                                                        <!-- Botón Editar -->
                                                         <button class="btn btn-sm btn-warning"
-                                                            onclick="editarAsignacion(<?= $curso['id'] ?>)">
+                                                            onclick="editarEstudiante(<?= $est['id'] ?>)">
                                                             <i class="mdi mdi-pencil"></i>
                                                         </button>
 
-                                                        <!-- Botón Eliminar -->
                                                         <button class="btn btn-sm btn-danger"
-                                                            onclick="eliminarAsignacion(<?= $curso['id'] ?>)">
+                                                            onclick="eliminarEstudiante(<?= $est['id'] ?>)">
                                                             <i class="mdi mdi-delete"></i>
                                                         </button>
                                                     </td>
@@ -277,14 +279,14 @@ z-index:9999;">
 
         });
 
-        function editarAsignacion(id) {
-            window.location.href = "editar_curso_grado_docente.php?id=" + id;
+        function editarEstudiante(id) {
+            window.location.href = "editar_estudiante_grado.php?id=" + id;
         }
 
-        function eliminarAsignacion(id) {
+        function eliminarEstudiante(id) {
 
             Swal.fire({
-                title: '¿Eliminar asignación?',
+                title: '¿Eliminar estudiante?',
                 text: "Esta acción no se puede deshacer",
                 icon: 'warning',
                 showCancelButton: true,
@@ -295,7 +297,7 @@ z-index:9999;">
 
                 if (result.isConfirmed) {
 
-                    fetch("../../controllers/EliminarCursoGradoDocenteController.php", {
+                    fetch("../../controllers/EliminarEstudianteController.php", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/x-www-form-urlencoded"
@@ -303,29 +305,29 @@ z-index:9999;">
                             body: "id=" + id
                         })
                         .then(response => response.text())
-.then(data => {
+                        .then(data => {
 
-    if (data.trim() === "ok") {
+                            if (data.trim() === "ok") {
 
-        Swal.fire(
-            'Eliminado',
-            'La asignación fue eliminada correctamente.',
-            'success'
-        ).then(() => {
-            location.reload();
-        });
+                                Swal.fire(
+                                    'Eliminado',
+                                    'El estudiante fue eliminado correctamente.',
+                                    'success'
+                                ).then(() => {
+                                    location.reload();
+                                });
 
-    } else {
+                            } else {
 
-        Swal.fire(
-            'Error',
-            'No se pudo eliminar la asignación.',
-            'error'
-        );
+                                Swal.fire(
+                                    'Error',
+                                    'No se pudo eliminar. Puede tener registros relacionados.',
+                                    'error'
+                                );
 
-    }
+                            }
 
-});
+                        });
 
                 }
             });

@@ -38,6 +38,16 @@ $rol = $_SESSION['rol'] ?? '';
                 </a>
             </li>
             <li class="nav-item">
+                <a href="estudiante_grado.php">
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8.82 17L13 19.28V22H6C4.89 22 4 21.11 4 20V4C4 2.9 4.89 2 6 2H7V9L9.5 7.5L12 9V2H18C19.1 2 20 2.89 20 4V12.54L18.5 11.72L8.82 17M24 17L18.5 14L13 17L18.5 20L24 17M15 19.09V21.09L18.5 23L22 21.09V19.09L18.5 21L15 19.09Z" />
+                        </svg>
+                    </span>
+                    <span class="text">Asignación E.G.</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="docentes.php">
                     <span class="icon">
                         <svg xmlns="http://www.w3.org" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -75,6 +85,16 @@ $rol = $_SESSION['rol'] ?? '';
                         </svg>
                     </span>
                     <span class="text">Asignación C.G.D.</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="calificaciones_admin.php">
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13,2L3,2V22H21V10L13,2M13,3.5L18.5,9H13V3.5M10.8,11.3L13.1,19H11L10.5,17.4H7.8L7.3,19H5.2L7.5,11.3H10.8M8.2,15.8H10.1L9.1,12.7L8.2,15.8M15,13V15H13V13H15M17,13V15H15V13H17M15,11V13H13V11H15M17,11V13H15V11H17Z" />
+                        </svg>
+                    </span>
+                    <span class="text">Calificaciones</span>
                 </a>
             </li>
             <li class="nav-item">

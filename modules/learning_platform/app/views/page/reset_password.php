@@ -1,15 +1,17 @@
 <?php
 require_once "../../../config/session.php";
+require_once "../../../config/database.php";
 require_once "../../controllers/DashboardController.php";
 
-$controller = new DashboardController();
+$database = new Database();
+$conn = $database->conectar();
 
-$userId = $_SESSION['id'];
+$controller = new DashboardController($conn);
+
 $rol = $_SESSION['rol'];
 
-$data = $controller->getDashboardData($userId, $rol);
-$estudiantes = $controller->getUsuariosPorRol(3); // 3 = rol estudiante
-
+// Traer todos los usuarios excepto admin (rol_id = 1)
+$usuarios = $controller->getUsuariosSinAdmin();
 
 ?>
 
@@ -130,11 +132,11 @@ $estudiantes = $controller->getUsuariosPorRol(3); // 3 = rol estudiante
 
 
                                         <tbody>
-                                            <?php foreach ($estudiantes as $e): ?>
+                                            <?php foreach ($usuarios as $u): ?>
                                                 <tr>
                                                     <td>
                                                         <?php
-                                                        $nombre = $e['nombres']; // nombre completo del usuario
+                                                        $nombre = $u['nombres']; // nombre completo del usuario
                                                         $inicial = strtoupper(substr(trim($nombre), 0, 1));
 
                                                         // Generar un color llamativo pero agradable usando HSL
@@ -144,8 +146,8 @@ $estudiantes = $controller->getUsuariosPorRol(3); // 3 = rol estudiante
                                                         $colorFondo = "hsl($hue, {$saturation}%, {$lightness}%)";
                                                         ?>
 
-                                                        <?php if (!empty($e['foto'])): ?>
-                                                            <img src="<?php echo $e['foto']; ?>"
+                                                        <?php if (!empty($u['foto'])): ?>
+                                                            <img src="<?php echo $u['foto']; ?>"
                                                                 style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                                         <?php else: ?>
                                                             <div style="
@@ -166,74 +168,30 @@ $estudiantes = $controller->getUsuariosPorRol(3); // 3 = rol estudiante
 
 
 
-                                                    <td><?php echo htmlspecialchars($e['usuario']); ?></td>
-                                                    <td><?php echo htmlspecialchars($e['nombres']); ?></td>
-                                                    <td><?php echo htmlspecialchars($e['apellidos']); ?></td>
+                                                    <td><?php echo htmlspecialchars($u['usuario']); ?></td>
+                                                    <td><?php echo htmlspecialchars($u['nombres']); ?></td>
+                                                    <td><?php echo htmlspecialchars($u['apellidos']); ?></td>
 
                                                     <!-- ESTADO -->
                                                     <td style="text-align:center;">
-                                                        <?php
-                                                        $estado = $e['estado'];
-
-                                                        if ($estado == 1) {
-                                                            $color = "#198754";
-                                                            $icon = "mdi-check-circle-outline";
-                                                            $texto = "Activo";
-                                                        } elseif ($estado == 2) {
-                                                            $color = "#fd7e14";
-                                                            $icon = "mdi-lock";
-                                                            $texto = "Bloqueado";
-                                                        } else {
-                                                            $color = "#dc3545";
-                                                            $icon = "mdi-close-circle";
-                                                            $texto = "Inactivo";
-                                                        }
-                                                        ?>
-
-                                                        <button onclick="cambiarEstado(<?php echo $e['id']; ?>, <?php echo $estado; ?>)"
-                                                            style="border:none;
-        background:<?php echo $color; ?>;
-        color:#fff;
-        padding:5px 10px;
-        border-radius:8px;
-        font-size:12px;">
-
-                                                            <i class="mdi <?php echo $icon; ?>" style="font-size:16px; vertical-align:middle; margin-right:4px;"></i>
-                                                            <?php echo $texto; ?>
-                                                        </button>
+                                                        <?php if (password_verify("Error404", $u['password'])): ?>
+                                                            <span class="badge bg-warning text-dark">Reseteado</span>
+                                                        <?php else: ?>
+                                                            <span class="badge bg-success">Normal</span>
+                                                        <?php endif; ?>
                                                     </td>
 
 
                                                     <!-- ACCION -->
                                                     <td style="text-align:center;">
-
-                                                        <!-- VER INFO -->
-                                                        <button title="Ver información"
-                                                            onclick="verUsuario(<?php echo $e['id']; ?>)"
-                                                            style="background:#17a2b8; color:#fff; border:none;
+                                                        <button title="Resetear contraseña"
+                                                            onclick="resetPassword(<?= $u['id'] ?>, '<?= htmlspecialchars($u['usuario']) ?>')"
+                                                            style="background:#dc3545; color:#fff; border:none;
         padding:6px 8px; border-radius:8px;">
-                                                            <i class="mdi mdi-eye" style="font-size:18px;"></i>
+                                                            <i class="mdi mdi-lock-reset" style="font-size:18px;"></i>
                                                         </button>
-
-                                                        <!-- Editar -->
-                                                        <button title="Editar"
-                                                            onclick="editarUsuario(<?php echo $e['id']; ?>)"
-                                                            style="background:#6f42c1; color:#fff; border:none;
-        padding:6px 8px; border-radius:8px;">
-                                                            <i class="mdi mdi-pencil" style="font-size:18px;"></i>
-                                                        </button>
-
-                                                        <?php if ($estado != 3): ?>
-                                                            <!-- Inactivar -->
-                                                            <button title="Inactivar"
-                                                                onclick="inactivarUsuario(<?php echo $e['id']; ?>)"
-                                                                style="background:#dc3545; color:#fff; border:none;
-            padding:6px 8px; border-radius:8px;">
-                                                                <i class="mdi mdi-account-off" style="font-size:18px;"></i>
-                                                            </button>
-                                                        <?php endif; ?>
-
                                                     </td>
+
 
 
                                                 </tr>
@@ -262,43 +220,6 @@ $estudiantes = $controller->getUsuariosPorRol(3); // 3 = rol estudiante
     </main>
     <!-- ======== main-wrapper end =========== -->
 
-    <div id="modalUsuario" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-justify-content:center;
-align-items:center;
-z-index:9999;">
-
-        <div style="
-    background:white;
-    width:90%;
-    max-width:700px;
-    border-radius:12px;
-    padding:25px;
-    position:relative;
-    display:flex;
-    flex-wrap:wrap;
-    gap:30px;">
-
-            <span onclick="cerrarModal()"
-                style="position:absolute;right:15px;top:10px;
-              font-size:22px;cursor:pointer;">&times;</span>
-
-            <div id="modalFoto" style="
-        flex:1;
-        display:flex;
-        align-items:center;
-        justify-content:center;"></div>
-
-            <div id="modalDatos" style="flex:2;"></div>
-
-        </div>
-    </div>
 
     <!-- ========= All Javascript files linkup ======== -->
     <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
@@ -343,104 +264,40 @@ z-index:9999;">
 
         });
 
-
-        function cambiarEstado(id, estadoActual) {
-
-            let nuevoEstado;
-
-            if (estadoActual == 1) {
-                nuevoEstado = 2; // Activo → Bloqueado
-            } else {
-                nuevoEstado = 1; // Bloqueado o Inactivo → Activo
-            }
-
-            fetch("../../controllers/CambiarEstadoUsuarioController.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: "id=" + id + "&estado=" + nuevoEstado
-                })
-                .then(response => response.text())
-                .then(data => {
-
-                    if (data.trim() === "ok") {
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Estado actualizado',
-                            text: 'El estado del usuario fue cambiado correctamente.',
-                            confirmButtonColor: '#198754'
-                        }).then(() => {
-                            location.reload();
-                        });
-
-                    } else {
-
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'No se pudo actualizar el estado.'
-                        });
-
-                    }
-
-                })
-                .catch(error => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error inesperado',
-                        text: 'Ocurrió un problema en la petición.'
-                    });
-                });
-        }
-
-
-
-        function inactivarUsuario(id) {
+        function resetPassword(id, usuario) {
 
             Swal.fire({
-                title: '¿Estás seguro?',
-                text: 'El usuario será desactivado.',
+                title: '¿Resetear contraseña?',
+                text: 'La contraseña será cambiada a: Error404',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#dc3545',
                 cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Sí, desactivar',
+                confirmButtonText: 'Sí, resetear',
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
 
                 if (result.isConfirmed) {
 
-                    fetch("../../controllers/CambiarEstadoUsuarioController.php", {
+                    fetch("../../controllers/ResetPasswordController.php", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/x-www-form-urlencoded"
                             },
-                            body: "id=" + id + "&estado=3"
+                            body: "id=" + id
                         })
                         .then(response => response.text())
                         .then(data => {
 
                             if (data.trim() === "ok") {
 
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Usuario inactivado',
-                                    text: 'El estado fue actualizado correctamente.',
-                                    confirmButtonColor: '#198754'
-                                }).then(() => {
-                                    location.reload();
-                                });
+                                mostrarCredenciales(usuario);
 
                             } else {
-
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'Error',
-                                    text: 'No se pudo desactivar el usuario.'
+                                    title: 'Error al resetear'
                                 });
-
                             }
 
                         });
@@ -450,72 +307,280 @@ z-index:9999;">
             });
         }
 
+        function mostrarCredenciales(usuario) {
 
-        function editarUsuario(id) {
-            window.location.href = "editar_estudiante.php?id=" + id;
+            const hora = new Date().getHours();
+            let saludo = "";
+
+            if (hora < 12) {
+                saludo = "Buenos días";
+            } else if (hora < 18) {
+                saludo = "Buenas tardes";
+            } else {
+                saludo = "Buenas noches";
+            }
+
+            const contenido = `
+        <div id="credencialesContent" style="text-align:left; font-family:Arial;">
+
+            <h3 style="text-align:center; margin-bottom:15px;">
+                Nuevas Credenciales
+            </h3>
+
+            <p>${saludo},</p>
+
+            <p>
+                Le damos la bienvenida al sistema institucional. 
+                A continuación, se detallan sus nuevas credenciales de acceso:
+            </p>
+
+            <table border="1" cellpadding="10" cellspacing="0" 
+                style="width:100%; border-collapse:collapse; text-align:center; margin:15px 0;">
+                <tr style="background:#f2f2f2; font-weight:bold;">
+                    <td>Usuario</td>
+                    <td>Contraseña</td>
+                </tr>
+                <tr>
+                    <td>${usuario}</td>
+                    <td>Error404</td>
+                </tr>
+            </table>
+
+            <p style="font-size:13px;">
+                Por motivos de seguridad, se recomienda cambiar la contraseña 
+                inmediatamente después de iniciar sesión.
+            </p>
+
+            <p style="font-size:13px;">
+                No comparta sus credenciales con ninguna persona, 
+                incluso si se trata de la contraseña por defecto del sistema.
+            </p>
+
+        </div>
+    `;
+
+            Swal.fire({
+                html: contenido,
+                width: 600,
+                showConfirmButton: false,
+                showCloseButton: true,
+                didOpen: () => {
+
+                    const footer = document.createElement("div");
+                    footer.style.textAlign = "right";
+                    footer.style.marginTop = "15px";
+
+                    footer.innerHTML = `
+                <button id="btnCopiar" class="swal2-confirm swal2-styled" 
+                    style="background:#0d6efd; margin-right:10px;">
+                    Copiar
+                </button>
+                <button id="btnImprimir" class="swal2-confirm swal2-styled" 
+                    style="background:#198754;">
+                    Imprimir
+                </button>
+            `;
+
+                    Swal.getHtmlContainer().appendChild(footer);
+
+                    document.getElementById("btnCopiar").onclick = function() {
+                        copiarCredenciales();
+                    };
+
+                    document.getElementById("btnImprimir").onclick = function() {
+                        imprimirCredenciales();
+                    };
+                }
+            });
         }
 
-        function verUsuario(id) {
+        function copiarCredenciales() {
 
-            fetch("../../services/obtener_usuario.php?id=" + id)
-                .then(response => response.json())
-                .then(data => {
+            const contenido = document.getElementById("credencialesContent").innerText;
 
-                    if (data.error) {
-                        alert(data.error);
-                        return;
-                    }
+            navigator.clipboard.writeText(contenido).then(() => {
 
-                    let fotoHTML = "";
-
-                    if (data.foto && data.foto !== "") {
-                        fotoHTML = `<img src="../../../resources/upload/photos/${data.foto}" 
-                        style="width:140px;height:140px;border-radius:50%;object-fit:cover;">`;
-                    } else {
-                        let inicial = data.nombres.charAt(0).toUpperCase();
-                        fotoHTML = `<div style="
-                        width:140px;
-                        height:140px;
-                        border-radius:50%;
-                        background:#6f42c1;
-                        color:white;
-                        font-size:55px;
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;">
-                        ${inicial}
-                        </div>`;
-                    }
-
-                    document.getElementById("modalFoto").innerHTML = fotoHTML;
-
-                    document.getElementById("modalDatos").innerHTML = `
-    <p><strong>ID:</strong> ${data.id ?? 'No registrada'}</p>
-    <p><strong>Usuario:</strong> ${data.usuario ?? 'No registrada'}</p>
-    <p><strong>Rol:</strong> ${data.rol ?? 'No registrada'}</p>
-    <p><strong>DNI:</strong> ${data.dni ?? 'No registrada'}</p>
-    <p><strong>Nombres:</strong> ${data.nombres ?? 'No registrada'}</p>
-    <p><strong>Apellidos:</strong> ${data.apellidos ?? 'No registrada'}</p>
-    <p><strong>Correo:</strong> ${data.correo ?? 'No registrada'}</p>
-    <p><strong>Celular:</strong> ${data.celular ?? 'No registrada'}</p>
-    <p><strong>Estado:</strong> ${data.estado_texto ?? 'No registrada'}</p>
-    <p><strong>Grado:</strong> ${data.grado_completo ?? 'No registrada'}</p>
-    <p><strong>Fecha de ingreso:</strong> ${data.fecha_ingreso ?? 'No registrada'}</p>
-    <p><strong>Fecha de registro:</strong> ${data.fecha_registro ?? 'No registrada'}</p>
-`;
-
-
-                    document.getElementById("modalUsuario").style.display = "flex";
-
-                })
-                .catch(error => {
-                    console.error("Error al obtener usuario:", error);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Copiado correctamente',
+                    timer: 1500,
+                    showConfirmButton: false
                 });
+
+            });
         }
 
+        function imprimirCredenciales() {
 
-        function cerrarModal() {
-            document.getElementById("modalUsuario").style.display = "none";
+            const usuario = document.querySelector("#credencialesContent table tr:nth-child(2) td:nth-child(1)").innerText;
+
+            const fechaActual = new Date();
+            const fechaFormateada = fechaActual.toLocaleDateString('es-BO', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            const horaFormateada = fechaActual.toLocaleTimeString('es-BO');
+
+            const ventana = window.open('', '', 'width=900,height=700');
+
+            ventana.document.write(`<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Credenciales de Acceso</title>
+<style>
+@page {
+    size: A4;
+    margin: 0;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.contenedor {
+    width: 190mm;   /* ancho real seguro dentro de A4 */
+    margin: 10mm auto;
+    padding: 8mm;
+    box-sizing: border-box;
+    border: 1px solid #000;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 5mm;
+}
+
+.logo img {
+    max-height: 18mm;
+}
+
+.titulo {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 4mm;
+}
+
+.fecha {
+    text-align: right;
+    font-size: 11px;
+    margin-bottom: 4mm;
+}
+
+.mensaje {
+    font-size: 12px;
+    margin-bottom: 4mm;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 4mm 0;
+}
+
+table, td {
+    border: 1px solid #000;
+}
+
+td {
+    padding: 4mm;
+    text-align: center;
+    font-size: 13px;
+}
+
+.nota {
+    font-size: 10px;
+    margin-top: 3mm;
+}
+
+.firma {
+    margin-top: 8mm;
+    font-size: 11px;
+}
+
+.firma-linea {
+    margin-top: 12mm;
+    border-top: 1px solid #000;
+    width: 60mm;
+}
+
+.pie {
+    margin-top: 3mm;
+    font-size: 9px;
+    text-align: center;
+    color: #555;
+}
+
+.corte {
+    border-top: 1px dashed #000;
+    margin: 8mm 0;
+}
+</style>
+
+</head>
+<body>
+
+<div class="contenedor">
+
+    <div class="logo">
+        <img src="../../assets/images/logo/">
+    </div>
+
+    <div class="titulo">
+        NUEVAS CREDENCIALES DE ACCESO
+    </div>
+
+    <div class="fecha">
+        Fecha: ${fechaFormateada} - ${horaFormateada}
+    </div>
+
+    <div class="mensaje">
+        A continuación se detallan sus credenciales institucionales:
+    </div>
+
+    <table>
+        <tr style="font-weight:bold; background:#f2f2f2;">
+            <td>Usuario</td>
+            <td>Contraseña</td>
+        </tr>
+        <tr>
+            <td>${usuario}</td>
+            <td>Error404</td>
+        </tr>
+    </table>
+
+    <div class="nota">
+        Por seguridad, cambie la contraseña después del primer inicio de sesión.
+    </div>
+
+    <div class="firma">
+        <div class="firma-linea"></div>
+        Sistema Institucional<br>
+        Departamento de Tecnología
+    </div>
+
+    <div class="pie">
+        Documento generado automáticamente por el sistema.
+    </div>
+
+</div>
+
+<div class="corte"></div>
+
+</body>
+</html>`);
+
+            ventana.document.close();
+
+            // Esperar a que cargue antes de imprimir
+            ventana.onload = function() {
+                ventana.print();
+            };
         }
     </script>
 </body>

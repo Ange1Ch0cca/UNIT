@@ -15,15 +15,15 @@ class DashboardController
     // DASHBOARD SEGÚN ROL
     // =========================
     public function contarNoLeidas()
-{
-    $stmt = $this->conn->query("
+    {
+        $stmt = $this->conn->query("
         SELECT COUNT(*) AS total
         FROM solicitudes_reset
         WHERE estado = 0
     ");
 
-    return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-}
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
 
     public function getDashboardData($userId, $rol)
     {
@@ -167,11 +167,11 @@ class DashboardController
     }
 
     // =========================
-// OBTENER USUARIOS POR ROL
-// =========================
-public function getUsuariosPorRol($rolId)
-{
-    $stmt = $this->conn->prepare("
+    // OBTENER USUARIOS POR ROL
+    // =========================
+    public function getUsuariosPorRol($rolId)
+    {
+        $stmt = $this->conn->prepare("
         SELECT 
             id,
             usuario,
@@ -184,13 +184,14 @@ public function getUsuariosPorRol($rolId)
         ORDER BY id DESC
     ");
 
-    $stmt->execute([$rolId]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        $stmt->execute([$rolId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-public function getUsuarioPorId($id){
+    public function getUsuarioPorId($id)
+    {
 
-    $sql = "SELECT 
+        $sql = "SELECT 
                 u.id,
                 u.usuario,
                 u.dni,
@@ -222,63 +223,64 @@ public function getUsuarioPorId($id){
 
             WHERE u.id = ?";
 
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute([$id]);
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
 
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if($usuario){
+        if ($usuario) {
 
-        // Estado bonito
-        if($usuario['estado'] == 1){
-            $usuario['estado_texto'] = "Activo";
-        } elseif($usuario['estado'] == 2){
-            $usuario['estado_texto'] = "Bloqueado";
-        } else {
-            $usuario['estado_texto'] = "Inactivo";
+            // Estado bonito
+            if ($usuario['estado'] == 1) {
+                $usuario['estado_texto'] = "Activo";
+            } elseif ($usuario['estado'] == 2) {
+                $usuario['estado_texto'] = "Bloqueado";
+            } else {
+                $usuario['estado_texto'] = "Inactivo";
+            }
+
+            // Si es estudiante
+            if ($usuario['rol'] == 'estudiante') {
+                $usuario['fecha_ingreso'] = $usuario['fecha_ingreso_estudiante'];
+                $usuario['grado_completo'] =
+                    $usuario['nombre_grado']
+                    ? $usuario['nombre_grado'] . " - " . $usuario['seccion']
+                    : "No asignado";
+            }
+
+            // Si es docente
+            if ($usuario['rol'] == 'docente') {
+                $usuario['fecha_ingreso'] = $usuario['fecha_ingreso_docente'];
+            }
         }
 
-        // Si es estudiante
-        if($usuario['rol'] == 'estudiante'){
-            $usuario['fecha_ingreso'] = $usuario['fecha_ingreso_estudiante'];
-            $usuario['grado_completo'] = 
-                $usuario['nombre_grado'] 
-                ? $usuario['nombre_grado'] . " - " . $usuario['seccion']
-                : "No asignado";
-        }
-
-        // Si es docente
-        if($usuario['rol'] == 'docente'){
-            $usuario['fecha_ingreso'] = $usuario['fecha_ingreso_docente'];
-        }
-
+        return $usuario;
     }
 
-    return $usuario;
-}
 
 
 
+    public function inactivarUsuario($id)
+    {
 
-public function inactivarUsuario($id){
+        $sql = "UPDATE usuarios SET estado = 3 WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([$id]);
+    }
 
-    $sql = "UPDATE usuarios SET estado = 3 WHERE id = ?";
-    $stmt = $this->conn->prepare($sql);
-    return $stmt->execute([$id]);
+    public function actualizarEstadoUsuario($id, $estado)
+    {
 
-}
+        $sql = "UPDATE usuarios SET estado = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
 
-public function actualizarEstadoUsuario($id, $estado){
+        return $stmt->execute([$estado, $id]);
+    }
 
-    $sql = "UPDATE usuarios SET estado = ? WHERE id = ?";
-    $stmt = $this->conn->prepare($sql);
+    public function getDocentes()
+    {
 
-    return $stmt->execute([$estado, $id]);
-}
-
-public function getDocentes(){
-
-    $sql = "SELECT 
+        $sql = "SELECT 
                 u.id,
                 u.usuario,
                 u.dni,
@@ -295,21 +297,22 @@ public function getDocentes(){
             WHERE u.rol_id = 2
             ORDER BY u.id DESC";
 
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute();
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
 
-    $docentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $docentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach($docentes as &$d){
-        $d['estado_texto'] = ($d['estado'] == 1) ? "Activo" : "Inactivo";
+        foreach ($docentes as &$d) {
+            $d['estado_texto'] = ($d['estado'] == 1) ? "Activo" : "Inactivo";
+        }
+
+        return $docentes;
     }
 
-    return $docentes;
-}
+    public function getCursosPorDocente($docente_id)
+    {
 
-public function getCursosPorDocente($docente_id){
-
-    $sql = "SELECT 
+        $sql = "SELECT 
                 c.nombre AS curso,
                 g.nombre_grado,
                 g.seccion
@@ -318,14 +321,14 @@ public function getCursosPorDocente($docente_id){
             INNER JOIN grados g ON g.id = cgd.grado_id
             WHERE cgd.docente_id = ?";
 
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute([$docente_id]);
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$docente_id]);
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-public function getCursosAsignados(){
-
+    public function getCursosAsignados()
+{
     $sql = "SELECT 
                 cgd.id,
                 c.nombre AS curso,
@@ -338,58 +341,104 @@ public function getCursosAsignados(){
             INNER JOIN grados g ON cgd.grado_id = g.id
             INNER JOIN docentes d ON cgd.docente_id = d.id
             INNER JOIN usuarios u ON d.usuario_id = u.id
-            ORDER BY c.nombre ASC";
+            WHERE cgd.estado = 1
+            ORDER BY g.nombre_grado ASC";
 
     $stmt = $this->conn->prepare($sql);
     $stmt->execute();
-
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-public function eliminarAsignacion($id){
-
-    $sql = "DELETE FROM curso_grado_docente WHERE id = ?";
+    public function eliminarAsignacion($id)
+{
+    $sql = "UPDATE curso_grado_docente SET estado = 0 WHERE id = ?";
     $stmt = $this->conn->prepare($sql);
-
     return $stmt->execute([$id]);
 }
 
-public function getCursos(){
+    public function getCursos()
+    {
 
-    $sql = "SELECT id, nombre, descripcion, foto_portada, estado
+        $sql = "SELECT id, nombre, descripcion, foto_portada, estado
             FROM cursos
             ORDER BY nombre ASC";
 
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute();
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-public function cambiarEstadoCurso($id, $estado){
+    public function cambiarEstadoCurso($id, $estado)
+    {
 
-    $sql = "UPDATE cursos SET estado = ? WHERE id = ?";
-    $stmt = $this->conn->prepare($sql);
+        $sql = "UPDATE cursos SET estado = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
 
-    return $stmt->execute([$estado, $id]);
-}
+        return $stmt->execute([$estado, $id]);
+    }
 
-public function getGrados(){
+    public function getGrados()
+    {
 
-    $sql = "SELECT id, nombre_grado, seccion, estado FROM grados";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute();
+        $sql = "SELECT id, nombre_grado, seccion, estado FROM grados";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
 
-    return $stmt->fetchAll();
-}
+        return $stmt->fetchAll();
+    }
 
-public function cambiarEstadoGrado($id, $estado){
+    public function cambiarEstadoGrado($id, $estado)
+    {
 
-    $sql = "UPDATE grados SET estado = ? WHERE id = ?";
-    $stmt = $this->conn->prepare($sql);
+        $sql = "UPDATE grados SET estado = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
 
-    return $stmt->execute([$estado, $id]);
-}
+        return $stmt->execute([$estado, $id]);
+    }
 
+    public function getUsuariosSinAdmin()
+    {
 
+        $sql = "SELECT id, usuario, nombres, apellidos, foto, password 
+            FROM usuarios 
+            WHERE rol_id != 1";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function resetearPassword($id)
+    {
+
+        $nuevaPassword = password_hash("Error404", PASSWORD_DEFAULT);
+
+        $sql = "UPDATE usuarios SET password = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+
+        return $stmt->execute([$nuevaPassword, $id]);
+    }
+
+    public function getEstudiantesConGrado()
+    {
+
+        $sql = "SELECT 
+                e.id,
+                u.nombres,
+                u.apellidos,
+                g.nombre_grado,
+                g.seccion,
+                e.fecha_ingreso
+            FROM estudiantes e
+            INNER JOIN usuarios u ON e.usuario_id = u.id
+            INNER JOIN grados g ON e.grado_id = g.id
+            WHERE e.estado = 1
+            ORDER BY u.apellidos ASC";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
