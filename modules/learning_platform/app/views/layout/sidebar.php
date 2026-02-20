@@ -11,7 +11,7 @@ $rol = $_SESSION['rol'] ?? '';
 <aside class="sidebar-nav-wrapper">
     <div class="navbar-logo">
         <a href="dashboard.php">
-            <img src="../../../assets/images/logo/logo.svg" alt="logo" />
+            <img src="../../../assets/images/logo/logo_sidebar-01.svg" alt="logo" />
         </a>
     </div>
     <nav class="sidebar-nav">
