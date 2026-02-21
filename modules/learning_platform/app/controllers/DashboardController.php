@@ -328,8 +328,8 @@ class DashboardController
     }
 
     public function getCursosAsignados()
-{
-    $sql = "SELECT 
+    {
+        $sql = "SELECT 
                 cgd.id,
                 c.nombre AS curso,
                 g.nombre_grado,
@@ -344,17 +344,17 @@ class DashboardController
             WHERE cgd.estado = 1
             ORDER BY g.nombre_grado ASC";
 
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function eliminarAsignacion($id)
-{
-    $sql = "UPDATE curso_grado_docente SET estado = 0 WHERE id = ?";
-    $stmt = $this->conn->prepare($sql);
-    return $stmt->execute([$id]);
-}
+    {
+        $sql = "UPDATE curso_grado_docente SET estado = 0 WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([$id]);
+    }
 
     public function getCursos()
     {
@@ -440,5 +440,168 @@ class DashboardController
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getGradosPorAnio($anio)
+    {
+        $sql = "SELECT id, nombre_grado, seccion 
+            FROM grados
+            WHERE estado = 1 AND anio = ?
+            ORDER BY nombre_grado ASC, seccion ASC";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$anio]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCursosPorGrado($grado_id)
+    {
+        $sql = "SELECT 
+                cgd.id,
+                c.nombre AS curso,
+                u.nombres,
+                u.apellidos
+            FROM curso_grado_docente cgd
+            INNER JOIN cursos c ON cgd.curso_id = c.id
+            INNER JOIN docentes d ON cgd.docente_id = d.id
+            INNER JOIN usuarios u ON d.usuario_id = u.id
+            WHERE cgd.grado_id = ?
+            AND cgd.estado = 1
+            AND c.estado = 1";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$grado_id]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getEstudiantesConPromedio($curso_grado_docente_id, $grado_id)
+    {
+        $sql = "SELECT 
+                e.id AS estudiante_id,
+                u.nombres,
+                u.apellidos,
+                ROUND(AVG(cal.valor_numerico),2) AS promedio
+            FROM estudiantes e
+            INNER JOIN usuarios u ON e.usuario_id = u.id
+            LEFT JOIN calificaciones cal 
+                ON cal.estudiante_id = e.id
+                AND cal.curso_grado_docente_id = ?
+            WHERE e.grado_id = ?
+            GROUP BY e.id
+            ORDER BY u.apellidos ASC";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$curso_grado_docente_id, $grado_id]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getNotasEstudiante($estudiante_id, $curso_grado_docente_id)
+    {
+        $sql = "SELECT 
+                cal.fecha,
+                tc.nombre AS tipo,
+                cal.valor_numerico,
+                cal.observacion
+            FROM calificaciones cal
+            INNER JOIN tipos_calificacion tc 
+                ON cal.tipo_calificacion_id = tc.id
+            WHERE cal.estudiante_id = ?
+            AND cal.curso_grado_docente_id = ?
+            ORDER BY cal.fecha DESC";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$estudiante_id, $curso_grado_docente_id]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCursosAsignadosPorDocente($docente_id, $anio)
+    {
+        $sql = "SELECT cgd.id AS curso_grado_docente_id,
+                   c.nombre AS curso,
+                   g.nombre_grado,
+                   g.seccion
+            FROM curso_grado_docente cgd
+            INNER JOIN cursos c ON cgd.curso_id = c.id
+            INNER JOIN grados g ON cgd.grado_id = g.id
+            WHERE cgd.docente_id = ? 
+            AND cgd.estado = 1
+            AND YEAR(cgd.fecha_creacion) = ?
+            ORDER BY g.nombre_grado ASC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$docente_id, $anio]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getGradosPorCurso($curso_grado_docente_id)
+    {
+        $sql = "SELECT g.id AS grado_id, g.nombre_grado, g.seccion
+            FROM curso_grado_docente cgd
+            INNER JOIN grados g ON cgd.grado_id = g.id
+            WHERE cgd.id = ? AND cgd.estado = 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$curso_grado_docente_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function guardarNota($estudiante_id, $curso_grado_docente_id, $rubro, $valor)
+    {
+        if ($rubro === "observacion") {
+            // Guardar observación sin tipo_calificacion
+            $sql = "UPDATE calificaciones 
+                SET observacion = ? 
+                WHERE estudiante_id = ? 
+                AND curso_grado_docente_id = ? 
+                AND DATE(fecha) = CURDATE()";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([$valor, $estudiante_id, $curso_grado_docente_id]);
+            return;
+        }
+
+        // Buscar si ya existe nota del rubro hoy
+        $sql = "SELECT cal.id
+            FROM calificaciones cal
+            INNER JOIN tipos_calificacion tc ON cal.tipo_calificacion_id = tc.id
+            WHERE cal.estudiante_id = ? 
+              AND cal.curso_grado_docente_id = ? 
+              AND tc.nombre = ? 
+              AND DATE(cal.fecha) = CURDATE()
+            LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$estudiante_id, $curso_grado_docente_id, $rubro]);
+        $existe = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($existe) {
+            $sqlUpdate = "UPDATE calificaciones SET valor_numerico = ? WHERE id = ?";
+            $stmtUpdate = $this->conn->prepare($sqlUpdate);
+            $stmtUpdate->execute([$valor, $existe['id']]);
+        } else {
+
+    $sqlInsert = "INSERT INTO calificaciones 
+        (estudiante_id, curso_grado_docente_id, tipo_calificacion_id, valor_numerico, fecha)
+        VALUES (
+            ?, 
+            ?, 
+            (SELECT id FROM tipos_calificacion 
+             WHERE nombre = ? 
+             AND curso_grado_docente_id = ?
+             LIMIT 1),
+            ?, 
+            NOW()
+        )";
+
+    $stmtInsert = $this->conn->prepare($sqlInsert);
+
+    $stmtInsert->execute([
+        $estudiante_id,
+        $curso_grado_docente_id,
+        $rubro,
+        $curso_grado_docente_id,
+        $valor
+    ]);
+}
     }
 }

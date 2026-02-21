@@ -94,7 +94,7 @@ $rol = $_SESSION['rol'] ?? '';
                             <path d="M13,2L3,2V22H21V10L13,2M13,3.5L18.5,9H13V3.5M10.8,11.3L13.1,19H11L10.5,17.4H7.8L7.3,19H5.2L7.5,11.3H10.8M8.2,15.8H10.1L9.1,12.7L8.2,15.8M15,13V15H13V13H15M17,13V15H15V13H17M15,11V13H13V11H15M17,11V13H15V11H17Z" />
                         </svg>
                     </span>
-                    <span class="text">Calificaciones</span>
+                    <span class="text">Reporte Calificaciones</span>
                 </a>
             </li>
             <li class="nav-item">
