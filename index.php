@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E404 — Soluciones Digitales</title>
+  <title>UNIT - Impulsamos tu Negocio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@700;800&display=swap" rel="stylesheet" />
@@ -720,12 +720,23 @@
     }
 
     .phone-avatar {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: var(--wh-green);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.78rem; flex-shrink: 0;
-    }
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--wh-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.phone-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
     .phone-name { font-size: 0.68rem; font-weight: 600; color: #fff; }
     .phone-status { font-size: 0.56rem; color: rgba(255,255,255,0.6); }
@@ -797,17 +808,27 @@
 
     @keyframes gp { 0%,100%{opacity:0.18} 50%{opacity:0.38} }
 
-    .wh-float-icon {
-      position: absolute;
-      background: rgba(12,12,22,0.92);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 0.55rem;
-      font-size: 1.25rem;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    }
+    .wh-float-icon{
+    width:52px;
+    height:52px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:absolute;
 
-    .wh-icon-1 { top:18px; right:8px; animation:wfi1 5s ease-in-out infinite; }
+    background:linear-gradient(135deg,#7c25d3,#31128c);
+    color:#fff;
+    font-size:1.35rem;
+
+    box-shadow:
+        0 10px 30px rgba(124, 37, 211, 0.35),
+        inset 0 1px 2px rgba(255,255,255,.25);
+
+    backdrop-filter:blur(10px);
+}
+
+    .wh-icon-1 { top:18px; right:8px; animation:wfi1 5s ease-in-out infinite;}
     .wh-icon-2 { top:50%; left:-12px; transform:translateY(-50%); animation:wfi2 6s ease-in-out infinite; }
     .wh-icon-3 { bottom:38px; right:-2px; animation:wfi3 4.5s ease-in-out infinite; }
 
@@ -1357,7 +1378,7 @@
 <header>
   <nav class="navbar">
     <a href="#inicio" class="logo" id="logo-link">
-      <img src="img/logo_glass_off.png" alt="E404" class="logo-img" />
+      <img src="./assets/img/LOGO OF.png" alt="UNIT" class="logo-img" />
     </a>
 
     <ul class="nav-links">
@@ -1515,7 +1536,7 @@
 
     <div class="cards-grid">
       <div class="card reveal">
-        <div class="card-icon">🌐</div>
+        <div class="card-icon"><i class="fa-solid fa-globe"></i></div>
         <h3>Páginas web profesionales</h3>
         <p>Landing pages, sitios corporativos y portafolios con diseño moderno, carga ultrarrápida y optimizados para convertir visitantes en clientes.</p>
         <span class="card-tag">Diseño · Frontend · SEO</span>
@@ -1599,9 +1620,9 @@
             <div class="phone-body">
               <div class="phone-screen">
                 <div class="phone-header">
-                  <div class="phone-avatar">🤖</div>
+                  <div class="phone-avatar"><img src="./assets/img/BotUnit.png" alt="BOT UNIT"></div>
                   <div>
-                    <div class="phone-name">Bot E404</div>
+                    <div class="phone-name">Bot UNIT</div>
                     <div class="phone-status">● En línea</div>
                   </div>
                 </div>
@@ -1620,9 +1641,17 @@
             </div>
           </div>
           <div class="phone-glow"></div>
-          <div class="wh-float-icon wh-icon-1">💬</div>
-          <div class="wh-float-icon wh-icon-2">📲</div>
-          <div class="wh-float-icon wh-icon-3">⚡</div>
+          <div class="wh-float-icon wh-icon-1">
+  <i class="fa-brands fa-whatsapp"></i>
+</div>
+
+<div class="wh-float-icon wh-icon-2">
+  <i class="fa-solid fa-robot"></i>
+</div>
+
+<div class="wh-float-icon wh-icon-3">
+  <i class="fa-solid fa-paper-plane"></i>
+</div>
         </div>
       </div>
     </div>
@@ -1809,8 +1838,8 @@
           </a>
         </li>
         <li>
-          <a href="mailto:contacto@e404.pe">
-            <i class="fa-solid fa-envelope" style="color:var(--purple-light);"></i> contacto@e404.pe
+          <a href="mailto:contacto@unit.pe">
+            <i class="fa-solid fa-envelope" style="color:var(--purple-light);"></i> contacto@unit.pe
           </a>
         </li>
         <li>
@@ -1827,7 +1856,7 @@
   </div>
 
   <div class="footer-bottom">
-    <p class="footer-copy">© 2025 E404 — Todos los derechos reservados</p>
+    <p class="footer-copy">© 2026 UNIT — Todos los derechos reservados</p>
     <div class="footer-badge">
       <span class="badge-dot" style="width:5px;height:5px;flex-shrink:0;"></span>
       Disponibles para nuevos proyectos
