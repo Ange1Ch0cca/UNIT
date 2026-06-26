@@ -1765,7 +1765,7 @@
   <div class="footer-top">
     <div class="footer-brand">
       <a href="#inicio">
-    <img src="img/logo_glass_off.png" alt="E404" style="height:44px;width:auto;display:block;" />
+    <img src="./assets/img/LOGO OF.png" alt="UNIT" style="height:44px;width:auto;display:block;" />
 </a>
       <p>Agencia digital especializada en desarrollo web, sistemas, automatización y marketing. Transformamos ideas en soluciones digitales que generan resultados reales.</p>
       <div class="footer-social">
