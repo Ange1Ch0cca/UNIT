@@ -1,31 +1,51 @@
-PRIVATE LICENSE - ERROR404
-==========================
+# PRIVATE LICENSE - UNIT
 
-Copyright (c) 2026 ERROR404
+Copyright © 2026 UNIT. All Rights Reserved.
 
-Todos los derechos de este software, su código fuente, diseño, arquitectura, base de datos
-y cualquier módulo o funcionalidad desarrollada son propiedad exclusiva de ERROR404.
+## Español
 
-Este software es **completamente privado** y **confidencial**.  
-Ninguna parte del mismo puede ser copiada, reutilizada, modificada, distribuida, publicada
-o utilizada de cualquier forma sin la **autorización previa y por escrito** de ERROR404.
+Todos los derechos sobre este software, incluyendo, entre otros, su código fuente, arquitectura, diseño, bases de datos, documentación, interfaces, APIs, recursos gráficos, lógica de negocio, algoritmos, módulos, funcionalidades y cualquier otro componente desarrollado, son propiedad exclusiva de **UNIT**.
 
-Cualquier reproducción, distribución o uso no autorizado de este software, parcial o total,
-puede resultar en sanciones legales, civiles y penales.
+Este software es **privado**, **confidencial** y está protegido por las leyes nacionales e internacionales de propiedad intelectual, derechos de autor y demás normativas aplicables.
+
+Queda estrictamente prohibido, sin la autorización previa y por escrito de **UNIT**:
+
+* Copiar o reproducir total o parcialmente este software.
+* Modificar, adaptar, traducir o crear trabajos derivados.
+* Distribuir, publicar, sublicenciar, vender, alquilar o comercializar cualquier parte del software.
+* Descompilar, realizar ingeniería inversa o intentar obtener el código fuente.
+* Compartir el código, documentación o cualquier información confidencial con terceros.
+* Utilizar este software para fines distintos a los expresamente autorizados por **UNIT**.
+
+El acceso a este repositorio no implica la concesión de ninguna licencia, cesión de derechos de propiedad intelectual ni autorización de uso comercial.
+
+Cualquier reproducción, distribución, modificación o uso no autorizado de este software, total o parcial, podrá dar lugar a las acciones legales correspondientes, incluyendo responsabilidades civiles, administrativas y penales, según la legislación aplicable.
 
 ---
 
-PRIVATE LICENSE - ERROR404 (ENGLISH)
-===================================
+# PRIVATE LICENSE - UNIT (ENGLISH)
 
-Copyright (c) 2026 ERROR404
+Copyright © 2026 UNIT. All Rights Reserved.
 
-All rights to this software, including its source code, design, architecture, database,
-and any developed module or functionality, are exclusively owned by ERROR404.
+## English
 
-This software is **fully private** and **confidential**.  
-No part of it may be copied, reused, modified, distributed, published, or used in any way
-without the **prior written permission** of ERROR404.
+All rights to this software, including but not limited to its source code, architecture, design, databases, documentation, APIs, graphical assets, business logic, algorithms, modules, features, and any other developed components, are the exclusive property of **UNIT**.
 
-Any unauthorized reproduction, distribution, or use of this software, in whole or in part,
-may result in civil and criminal penalties.
+This software is **private**, **confidential**, and protected by applicable national and international copyright, intellectual property, and related laws.
+
+Without the prior written authorization of **UNIT**, you may **not**:
+
+* Copy or reproduce this software, in whole or in part.
+* Modify, adapt, translate, or create derivative works.
+* Distribute, publish, sublicense, sell, lease, or commercially exploit any part of this software.
+* Reverse engineer, decompile, disassemble, or attempt to obtain the source code.
+* Share the source code, documentation, or confidential information with third parties.
+* Use this software for any purpose other than those expressly authorized by **UNIT**.
+
+Access to this repository does **not** grant any license, ownership rights, intellectual property rights, or permission to use this software beyond the scope explicitly authorized by **UNIT**.
+
+Any unauthorized reproduction, distribution, modification, disclosure, or use of this software, in whole or in part, may result in legal action, including civil, administrative, and criminal penalties under applicable law.
+
+---
+
+© 2026 **UNIT**. All Rights Reserved.
