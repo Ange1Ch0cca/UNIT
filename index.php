@@ -1378,7 +1378,7 @@
 <header>
   <nav class="navbar">
     <a href="#inicio" class="logo" id="logo-link">
-      <img src="./assets/img/LOGO OF.png" alt="UNIT" class="logo-img" />
+      <img src="./assets/img//LogoUnitNew-01.webp" alt="UNIT" class="logo-img" />
     </a>
 
     <ul class="nav-links">
@@ -1542,31 +1542,31 @@
         <span class="card-tag">Diseño · Frontend · SEO</span>
       </div>
       <div class="card reveal">
-        <div class="card-icon">⚙️</div>
+        <div class="card-icon"><i class="fa-solid fa-laptop-code"></i></div>
         <h3>Sistemas a medida</h3>
         <p>Plataformas, dashboards, CRMs y sistemas internos adaptados exactamente a tu flujo de trabajo y necesidades de negocio.</p>
         <span class="card-tag">Backend · Bases de datos</span>
       </div>
       <div class="card reveal">
-        <div class="card-icon">🤖</div>
+        <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
         <h3>Bots de WhatsApp</h3>
         <p>Automatiza atención al cliente, ventas y seguimientos con bots inteligentes que trabajan 24/7 conectados a tu negocio.</p>
         <span class="card-tag">Automatización · IA</span>
       </div>
       <div class="card reveal">
-        <div class="card-icon">📈</div>
+        <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
         <h3>Marketing digital</h3>
         <p>Estrategias de redes sociales, publicidad pagada y posicionamiento SEO que atraen clientes reales y miden resultados.</p>
         <span class="card-tag">SEO · Ads · Social media</span>
       </div>
       <div class="card reveal">
-        <div class="card-icon">🛒</div>
+        <div class="card-icon"><i class="fa-solid fa-cart-shopping"></i></div>
         <h3>Tiendas en línea</h3>
         <p>E-commerce completo con pasarela de pagos, gestión de inventario, panel administrativo y experiencia de compra fluida.</p>
         <span class="card-tag">E-commerce · Pagos</span>
       </div>
       <div class="card reveal">
-        <div class="card-icon">🔗</div>
+        <div class="card-icon"><i class="fa-solid fa-network-wired"></i></div>
         <h3>Integraciones y APIs</h3>
         <p>Conectamos tus herramientas existentes: ERP, CRM, pasarelas de pago, redes sociales y servicios externos.</p>
         <span class="card-tag">API · Integración</span>
@@ -1620,7 +1620,7 @@
             <div class="phone-body">
               <div class="phone-screen">
                 <div class="phone-header">
-                  <div class="phone-avatar"><img src="./assets/img/BotUnit.png" alt="BOT UNIT"></div>
+                  <div class="phone-avatar"><img src="./assets/img/BotUnitNew-01.webp" alt="BOT UNIT"></div>
                   <div>
                     <div class="phone-name">Bot UNIT</div>
                     <div class="phone-status">● En línea</div>
@@ -1794,7 +1794,7 @@
   <div class="footer-top">
     <div class="footer-brand">
       <a href="#inicio">
-    <img src="./assets/img/LOGO OF.png" alt="UNIT" style="height:44px;width:auto;display:block;" />
+    <img src="./assets/img/LogoUnitNew-01.webp" alt="UNIT" style="height:44px;width:auto;display:block;" />
 </a>
       <p>Agencia digital especializada en desarrollo web, sistemas, automatización y marketing. Transformamos ideas en soluciones digitales que generan resultados reales.</p>
       <div class="footer-social">
