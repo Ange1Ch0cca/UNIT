@@ -4,6 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UNIT - Impulsamos tu Negocio</title>
+  <meta name="description" content="En UNIT desarrollamos soluciones digitales robustas: sistemas a medida, portales web institucionales y diseño UI/UX de alta fidelidad. Impulsa tu ecosistema digital aquí." />
+  <meta name="keywords" content="unit, software a medida, desarrollo web, sistemas web, ui ux, paginas web peru, huanta, marketing digital, ecommerce" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="UNIT - Soluciones Digitales Inteligentes" />
+  <meta name="copyright" content="UNIT 2026" />
+
+  <link rel="icon" href="./assets/img/icon/ICONO1.png" type="image/x-icon" />
+  <link rel="shortcut icon" href="./assets/img/icon/ICONO1.png" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://unit.pe/" /> <meta property="og:title" content="UNIT | Ecosistemas Digitales de Alta Fidelidad" />
+  <meta property="og:description" content="Desarrollo de software, sistemas avanzados y plataformas interactivas. Explora nuestras demos en tiempo real." />
+  <meta property="og:image" content="https://unit.pe/assets/img/og-preview.jpg" /> 
+  <meta property="og:site_name" content="UNIT" />
+  <meta property="og:locale" content="es_PE" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="UNIT | Ecosistemas Digitales" />
+  <meta name="twitter:description" content="Diseño de alta fidelidad y arquitectura de software robusta para tu proyecto." />
+  <meta name="twitter:image" content="https://unit.pe/assets/img/og-preview.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@700;800&display=swap" rel="stylesheet" />
@@ -1363,6 +1384,764 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
+ 
+    /* ── PORTFOLIO ── */
+.portfolio-section {
+  padding: 5.5rem 3rem;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black, transparent);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black, transparent);
+}
+
+.portfolio-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.portfolio-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.portfolio-header .section-title { margin-bottom: 0; }
+
+/* Filter tabs */
+.portfolio-filters {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.pf-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.38rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.pf-tab:hover {
+  border-color: rgba(168,85,247,0.4);
+  color: var(--text);
+  background: rgba(124,58,237,0.08);
+}
+
+.pf-tab.active {
+  background: rgba(124,58,237,0.15);
+  border-color: rgba(168,85,247,0.45);
+  color: var(--purple-glow);
+}
+
+.portfolio-subtitle {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 560px;
+  margin-bottom: 2rem;
+}
+
+/* ── Slider ── */
+.pf-slider-wrap { position: relative; }
+
+.pf-track-outer {
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.pf-track {
+  display: flex;
+  gap: 1.25rem;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* ── Card ── */
+.pf-card {
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.pf-card:hover {
+  border-color: rgba(124,58,237,0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(124,58,237,0.18);
+}
+
+/* Thumbnail */
+.pf-thumb {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: var(--surface2);
+  flex-shrink: 0;
+}
+
+.pf-screenshot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.pf-card:hover .pf-screenshot { transform: scale(1.04); }
+
+/* Placeholder */
+.pf-thumb-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: var(--surface2);
+  border-bottom: 1px dashed var(--border);
+}
+
+.pf-thumb-placeholder i { font-size: 2rem; color: rgba(168,85,247,0.25); }
+.pf-thumb-placeholder span { font-size: 0.7rem; color: var(--muted); font-family: monospace; }
+
+/* Overlay */
+.pf-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8,8,15,0.94) 0%, rgba(8,8,15,0.25) 65%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.1rem 1.2rem;
+  z-index: 2;
+}
+
+.pf-card:hover .pf-overlay { opacity: 1; }
+
+@media (hover: none) {
+  .pf-overlay { opacity: 1; }
+}
+
+.pf-overlay-desc {
+  color: rgba(241,240,255,0.78);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+/* Status badge */
+.pf-status {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.63rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.pf-status-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2s infinite;
+}
+
+.pf-status--soon { background: rgba(124,58,237,0.82); color: #e9d5ff; border: 1px solid rgba(168,85,247,0.5); }
+.pf-status--live { background: rgba(34,197,94,0.82);  color: #dcfce7; border: 1px solid rgba(34,197,94,0.5); }
+.pf-status--wip  { background: rgba(251,146,60,0.82); color: #ffedd5; border: 1px solid rgba(251,146,60,0.5); }
+
+/* Info bar */
+.pf-info {
+  padding: 0.85rem 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+
+.pf-info-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.pf-info-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pf-info-type { color: var(--muted); font-size: 0.67rem; }
+
+.pf-info-right { display: flex; align-items: center; gap: 0.45rem; flex-shrink: 0; }
+
+.pf-info-stack { display: flex; gap: 0.3rem; }
+
+.pf-stack-pill {
+  font-size: 0.6rem;
+  color: var(--muted);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1rem 0.38rem;
+  white-space: nowrap;
+}
+
+.pf-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.72rem;
+  flex-shrink: 0;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.pf-link-btn:hover {
+  background: rgba(124,58,237,0.15);
+  border-color: rgba(168,85,247,0.4);
+  color: var(--purple-glow);
+}
+
+/* ── Controles ── */
+.pf-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.pf-dots { display: flex; gap: 0.4rem; align-items: center; }
+
+.pf-dot {
+  width: 6px; height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+  border: none; padding: 0;
+  flex-shrink: 0;
+  transition: background 0.25s, width 0.25s;
+}
+
+.pf-dot.active { background: var(--purple-light); width: 20px; }
+
+.pf-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.8rem;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.pf-arrow:hover:not(:disabled) {
+  background: rgba(124,58,237,0.15);
+  border-color: rgba(168,85,247,0.4);
+  color: var(--purple-glow);
+}
+
+.pf-arrow:disabled { opacity: 0.3; pointer-events: none; }
+
+.pf-counter { font-size: 0.74rem; color: var(--muted); min-width: 56px; text-align: center; }
+.pf-counter em { color: var(--purple-light); font-style: normal; font-weight: 600; }
+
+/* ── CTA strip ── */
+.portfolio-cta-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.pf-cta-text h3 {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.pf-cta-text p { color: var(--muted); font-size: 0.85rem; }
+
+.pf-cta-actions { display: flex; gap: 0.65rem; flex-wrap: wrap; align-items: center; }
+
+.pf-wh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(37,211,102,0.1);
+  border: 1px solid rgba(37,211,102,0.3);
+  border-radius: 10px;
+  padding: 0.7rem 1.2rem;
+  color: var(--wh-green);
+  font-weight: 600;
+  font-size: 0.88rem;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.pf-wh-btn:hover { background: rgba(37,211,102,0.18); }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .portfolio-section { padding: 4.5rem 1.75rem; }
+  .portfolio-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .portfolio-filters { justify-content: flex-start; }
+}
+
+@media (max-width: 640px) {
+  .portfolio-section { padding: 3.5rem 1.25rem; }
+  .portfolio-cta-strip { flex-direction: column; }
+  .pf-cta-actions { width: 100%; flex-direction: column; }
+  .pf-cta-actions .btn-primary,
+  .pf-cta-actions .pf-wh-btn { width: 100%; justify-content: center; }
+}
+
+/* Contenedor General del Dispositivo (Estilo Laptop/Tablet de Cristal) */
+  .device-mockup {
+    background: #090B11;
+    border: 1px solid #1A2333;
+    border-radius: 16px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 420px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Cabecera del Navegador incorporado */
+  .device-header {
+    background: #111520;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #1A2333;
+    gap: 20px;
+  }
+  .device-dots { display: flex; gap: 6px; }
+  .device-dots span { width: 10px; height: 10px; border-radius: 50%; display: block; }
+  .dot-r { background: #FF5F56; }
+  .dot-y { background: #FFBD2E; }
+  .dot-g { background: #27C93F; }
+  
+  .device-search-bar {
+    background: #06080C;
+    border: 1px solid #1F2A3E;
+    color: #94A3B8;
+    border-radius: 8px;
+    padding: 4px 16px;
+    font-size: 0.75rem;
+    font-family: monospace;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    max-width: 320px;
+  }
+
+  /* Pestañas de Navegación del producto */
+  .device-nav-tabs {
+    background: #151B27;
+    display: flex;
+    border-bottom: 1px solid #1A2333;
+    overflow-x: auto;
+  }
+  .device-tab {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #64748B;
+    padding: 12px 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    border-right: 1px solid #1A2333;
+    transition: all 0.2s ease;
+  }
+  .device-tab:hover { color: #FFF; background: rgba(255,255,255,0.01); }
+  .device-tab.active {
+    background: #090B11;
+    color: #FFF;
+    border-bottom: 2px solid #00E676;
+  }
+
+  /* Pantalla de Visualización Principal */
+  .device-screen-content {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: radial-gradient(circle at top, #121A2E 0%, #090B11 100%);
+  }
+
+  /* Animación de entrada fluida */
+  .dynamic-fade {
+    animation: deviceContentFade 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    width: 100%;
+  }
+
+  /* --- COMPONENTE INTERNO: DASHBOARD VOY --- */
+  .voy-dashboard { width: 100%; }
+  .voy-header-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .badge-live {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #00E676;
+    background: rgba(0, 230, 118, 0.1);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .voy-map-widget {
+    height: 160px;
+    background: #0B0E17;
+    border: 1px solid #1F2A3E;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .map-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-size: 20px 20px;
+    background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+  }
+  .map-vector-route {
+    position: absolute;
+    width: 80%; height: 2px;
+    background: #1E293B;
+    border-top: 2px dashed #00E676;
+    top: 55%; left: 10%;
+    transform: rotate(-5deg);
+  }
+  .map-marker-car {
+    position: absolute;
+    top: 45%; left: 45%;
+    background: #00E676;
+    color: #000;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    box-shadow: 0 0 15px rgba(0, 230, 118, 0.6);
+    animation: floatMarker 3s ease-in-out infinite;
+  }
+  .marker-pulse {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid #00E676;
+    animation: pulseMarker 1.8s infinite;
+  }
+  .map-pop-info {
+    position: absolute;
+    top: 14px; left: 14px;
+    background: rgba(17, 21, 32, 0.85);
+    border: 1px solid #2D3D54;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    color: #E2E8F0;
+    backdrop-filter: blur(4px);
+  }
+
+  .voy-metrics { display: flex; gap: 10px; }
+  .metric-pill {
+    flex: 1;
+    background: #111622;
+    border: 1px solid #1F2A3E;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .metric-label { display: block; font-size: 0.65rem; color: #64748B; margin-bottom: 2px; }
+  .metric-value { display: block; font-size: 1rem; font-weight: 700; color: #F1F5F9; }
+
+  /* --- COMPONENTE INTERNO: PORTAL WEB --- */
+  .portal-mockup {
+    background: #F8FAFC;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  }
+  .portal-nav {
+    background: #0F172A;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #FFF;
+    font-size: 0.7rem;
+    font-weight: bold;
+  }
+  .portal-hero {
+    padding: 24px 16px;
+    text-align: center;
+    color: #1E293B;
+  }
+  .portal-hero h4 { font-size: 1.1rem; margin-bottom: 6px; color: #0F172A; font-weight: 800; }
+  .portal-hero p { font-size: 0.75rem; color: #64748B; margin-bottom: 12px; }
+  .portal-btn {
+    background: #00B0FF;
+    color: #FFF;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  /* --- COMPONENTE INTERNO: UX DASHBOARD --- */
+  .ux-analytics-box { width: 100%; }
+  .ux-chart-container {
+    height: 130px;
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.03);
+    margin-bottom: 14px;
+  }
+  .ux-bar {
+    flex: 1;
+    background: linear-gradient(to top, #A855F7, #E040FB);
+    border-radius: 4px 4px 0 0;
+    animation: growBar 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transform-origin: bottom;
+  }
+
+  /* --- ANIMACIONES GENERALES --- */
+  @keyframes deviceContentFade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes floatMarker {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  @keyframes pulseMarker {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+  @keyframes growBar {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+  .animate-pulse-green {
+    animation: pGreen 2s infinite;
+  }
+  @keyframes pGreen {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.4; }
+  }
+
+  /* Resplandor Neon de fondo */
+  .device-glow {
+    position: absolute;
+    width: 90%; height: 90%;
+    top: 5%; left: 5%;
+    background: radial-gradient(circle, rgba(0,230,118,0.06) 0%, transparent 70%);
+    filter: blur(20px);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* --- Estilos exclusivos del Modal Flotante --- */
+.glass-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); 
+  backdrop-filter: blur(8px); 
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999; /* Asegura estar por encima de todo */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.glass-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.glass-modal-content {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 35px 25px;
+  width: 90%;
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  position: relative;
+  font-family: sans-serif; /* Se acoplará a la tipografía de tu web */
+}
+
+.glass-modal-content h4 {
+  font-size: 20px;
+  color: #ffffff;
+  margin: 0 0 20px 0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.glass-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.glass-modal-close:hover {
+  color: #fff;
+}
+
+/* --- Botón WhatsApp Original --- */
+.btn-whatsapp-send {
+  background-color: #25D366;
+  color: #ffffff;
+  border: none;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  width: 100%;
+}
+
+.btn-whatsapp-send:hover {
+  background-color: #20ba5a;
+  transform: translateY(-2px);
+}
+
+/* --- Ajustes del Contenido del Modal Profesional --- */
+.glass-modal-content h4 {
+  font-size: 22px;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.glass-modal-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+  margin: 0 0 25px 0;
+  padding: 0 10px;
+}
+
+/* Forzar que las opciones del select sigan manteniendo el fondo predeterminado del sistema/página */
+.form-select option {
+  background-color: #141428 !important; 
+  color: #fff !important;
+}
   </style>
 </head>
 <body>
@@ -1378,12 +2157,13 @@
 <header>
   <nav class="navbar">
     <a href="#inicio" class="logo" id="logo-link">
-      <img src="./assets/img//LogoUnitNew-01.webp" alt="UNIT" class="logo-img" />
+      <img src="./assets/img/icon/LogoUnitNew-01.webp" alt="UNIT" class="logo-img" />
     </a>
 
     <ul class="nav-links">
       <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#bots">Bots</a></li>
+      <li><a href="#ecosistema-digital">Ecosistema</a></li>
+      <li><a href="#portafolio">Portafolio</a></li>
       <li><a href="#proceso">Proceso</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
@@ -1405,7 +2185,8 @@
   <!-- Mobile drawer -->
   <div class="mobile-menu" id="mobileMenu" role="navigation">
     <a href="#servicios" class="mobile-nav-link">Servicios</a>
-    <a href="#bots" class="mobile-nav-link">Bots de WhatsApp</a>
+    <a href="#ecosistema-digital" class="mobile-nav-link">Ecosistema</a>
+    <a href="#portafolio" class="mobile-nav-link">Portafolio</a>
     <a href="#proceso" class="mobile-nav-link">Proceso</a>
     <a href="#contacto" class="mobile-nav-link">Contacto</a>
     <div class="mobile-menu-actions">
@@ -1426,80 +2207,79 @@
        HERO
   ============================ -->
   <section class="hero" id="inicio">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
 
-    <div class="hero-left">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        Desarrollo · Marketing · Automatización
-      </div>
-
-      <h1>
-        Construimos tu<br />
-        presencia <span class="hl">digital</span><br />
-        que <span class="hl2">convierte</span>
-      </h1>
-
-      <p class="hero-sub">
-        Páginas web, sistemas a medida, bots de WhatsApp y marketing digital.
-        Todo lo que tu empresa necesita para crecer, en un solo lugar.
-      </p>
-
-      <div class="hero-actions">
-        <button class="btn-primary" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
-          Quiero mi proyecto <i class="fa-solid fa-arrow-right"></i>
-        </button>
-        <button class="btn-secondary" onclick="document.getElementById('servicios').scrollIntoView({behavior:'smooth'})">
-          Ver servicios
-        </button>
-      </div>
-
-      <div class="hero-trust">
-        <div class="trust-avatars">
-          <span>JR</span><span>MA</span><span>CP</span><span>LV</span>
-        </div>
-        <div class="trust-text">
-          <strong>+80 clientes</strong> confían en nosotros
-        </div>
-      </div>
+  <div class="hero-left">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Desarrollo · Marketing · Automatización de Procesos
     </div>
 
-    <!-- 3D Scene -->
-    <div class="hero-right">
-      <div class="hero-3d-scene">
-        <div class="orbit-ring orbit-ring-3"></div>
-        <div class="orbit-ring orbit-ring-2"></div>
-        <div class="orbit-ring orbit-ring-1">
-          <div class="orbit-dot"></div>
-        </div>
+    <h1>
+      Construimos tu<br />
+      presencia <span class="hl">digital</span><br />
+      que <span class="hl2">convierte</span>
+    </h1>
 
-        <div class="cube-wrapper">
-          <div class="cube">
-            <div class="cube-face face-front"><i class="fa-solid fa-laptop"></i></div>
-            <div class="cube-face face-back"><i class="fa-solid fa-jet-fighter-up"></i></div>
-            <div class="cube-face face-left"><i class="fa-solid fa-gear"></i></div>
-            <div class="cube-face face-right"><i class="fa-solid fa-chart-line"></i></div>
-            <div class="cube-face face-top"><i class="fa-solid fa-code-merge"></i></div>
-            <div class="cube-face face-bottom"><i class="fa-solid fa-robot"></i></div>
-          </div>
-        </div>
+    <p class="hero-sub">
+      Desarrollamos páginas web, sistemas a medida y automatizaciones que optimizan tu empresa y eliminan tareas repetitivas.
 
-        <div class="scene-platform"></div>
+    </p>
 
-        <div class="float-card float-card-1">
-          <div class="fc-dot"></div> Bot activo · 24/7
-        </div>
-        <div class="float-card float-card-2">
-          <div class="fc-dot"></div> +100 mensajes/día
-        </div>
-        <div class="float-card float-card-3">
-          <div class="fc-dot"></div> Entrega en 7 días
-        </div>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
+        Quiero optimizar mi empresa <i class="fa-solid fa-arrow-right"></i>
+      </button>
+      <button class="btn-secondary" onclick="document.getElementById('servicios').scrollIntoView({behavior:'smooth'})">
+        Ver soluciones
+      </button>
+    </div>
+
+    <div class="hero-trust">
+      <div class="trust-avatars">
+        <span>ME</span><span>UN</span><span>SA</span><span>IH</span>
+      </div>
+      <div class="trust-text">
+        <strong>+30 empresas</strong> optimizan sus operaciones con nosotros
       </div>
     </div>
-  </section>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-3d-scene">
+      <div class="orbit-ring orbit-ring-3"></div>
+      <div class="orbit-ring orbit-ring-2"></div>
+      <div class="orbit-ring orbit-ring-1">
+        <div class="orbit-dot"></div>
+      </div>
+
+      <div class="cube-wrapper">
+        <div class="cube">
+          <div class="cube-face face-front"><i class="fa-solid fa-network-wired"></i></div>
+          <div class="cube-face face-back"><i class="fa-solid fa-database"></i></div>
+          <div class="cube-face face-left"><i class="fa-solid fa-gears"></i></div>
+          <div class="cube-face face-right"><i class="fa-solid fa-chart-pie"></i></div>
+          <div class="cube-face face-top"><i class="fa-solid fa-code"></i></div>
+          <div class="cube-face face-bottom"><i class="fa-solid fa-bolt"></i></div>
+        </div>
+      </div>
+
+      <div class="scene-platform"></div>
+
+      <div class="float-card float-card-1">
+        <div class="fc-dot"></div> Procesos Automatizados
+      </div>
+      <div class="float-card float-card-2">
+        <div class="fc-dot"></div> Reducción de Tiempos · Errores 0%
+      </div>
+      <div class="float-card float-card-3">
+        <div class="fc-dot"></div> Sistemas 100% a Medida
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- ============================
        STATS
@@ -1548,10 +2328,10 @@
         <span class="card-tag">Backend · Bases de datos</span>
       </div>
       <div class="card reveal">
-        <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
-        <h3>Bots de WhatsApp</h3>
-        <p>Automatiza atención al cliente, ventas y seguimientos con bots inteligentes que trabajan 24/7 conectados a tu negocio.</p>
-        <span class="card-tag">Automatización · IA</span>
+        <div class="card-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+        <h3>Diseño UI / UX</h3>
+        <p>Creamos interfaces modernas, intuitivas y atractivas. Rediseñamos la imagen digital de tu negocio para conectar mejor con tus usuarios.</p>
+        <span class="card-tag">Figma · Prototipado · UI</span>
       </div>
       <div class="card reveal">
         <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
@@ -1574,88 +2354,281 @@
     </div>
   </section>
 
-  <!-- ============================
-       BOTS SECTION
-  ============================ -->
-  <section class="bots-section" id="bots">
-    <div class="bots-inner">
-      <div>
-        <div class="section-label">Bots de WhatsApp</div>
-        <h2 class="section-title">Tu asistente<br />que nunca duerme</h2>
-        <p style="color:var(--muted);line-height:1.75;margin-bottom:0;font-size:1rem;">
-          Nuestros bots responden al instante, envían catálogos, agendan citas y procesan pedidos —
-          de forma automática, integrado a tu negocio. Sin contratar más personal.
-        </p>
+  <section class="bots-section" id="ecosistema-digital">
+  <div class="bots-inner">
+    
+    <!-- LADO IZQUIERDO: TEXTO DESCRIPTIVO -->
+    <div>
+      <div class="section-label">Plataformas Inteligentes</div>
+      <h2 class="section-title">Software a medida<br />con diseño de alta fidelidad</h2>
+      <p style="color:var(--muted); line-height:1.75; margin-bottom:1.5rem; font-size:1rem;">
+        Desarrollamos soluciones digitales robustas que combinan una arquitectura de datos impecable con interfaces fluidas. Explora las demos interactivas de nuestros ecosistemas en tiempo real.
+      </p>
 
-        <div class="bots-features">
-          <div class="bot-feature">
-            <div class="bot-feature-icon"><i class="fa-solid fa-check"></i></div>
-            Respuestas automáticas en menos de 1 segundo
-          </div>
-          <div class="bot-feature">
-            <div class="bot-feature-icon"><i class="fa-solid fa-check"></i></div>
-            Integración con tu catálogo, agenda y CRM
-          </div>
-          <div class="bot-feature">
-            <div class="bot-feature-icon"><i class="fa-solid fa-check"></i></div>
-            Campañas masivas de mensajes y seguimientos
-          </div>
-          <div class="bot-feature">
-            <div class="bot-feature-icon"><i class="fa-solid fa-check"></i></div>
-            Panel de control para ver conversaciones en tiempo real
-          </div>
+      <div class="bots-features">
+        <div class="bot-feature">
+          <div class="bot-feature-icon" style="background: rgba(0, 230, 118, 0.1); color: #00E676;"><i class="fa-solid fa-layer-group"></i></div>
+          <span><strong>Sistemas y Apps:</strong> Monitoreo en tiempo real, geolocalización y flujos automatizados optimizados.</span>
         </div>
-
-        <div style="margin-top:2rem;">
-          <button class="btn-primary" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
-            Quiero mi bot de WhatsApp <i class="fa-brands fa-whatsapp"></i>
-          </button>
+        <div class="bot-feature">
+          <div class="bot-feature-icon" style="background: rgba(0, 176, 255, 0.1); color: #00B0FF;"><i class="fa-solid fa-display"></i></div>
+          <span><strong>Portales Web:</strong> Sitios institucionales veloces, adaptables y con carga optimizada.</span>
+        </div>
+        <div class="bot-feature">
+          <div class="bot-feature-icon" style="background: rgba(224, 64, 251, 0.1); color: #E040FB;"><i class="fa-solid fa-palette"></i></div>
+          <span><strong>Diseño UI/UX:</strong> Experiencias visuales interactivas pensadas en la retención del usuario.</span>
         </div>
       </div>
 
-      <!-- 3D Phone -->
-      <div class="bots-right">
-        <div class="wh-scene">
-          <div class="wh-phone">
-            <div class="phone-body">
-              <div class="phone-screen">
-                <div class="phone-header">
-                  <div class="phone-avatar"><img src="./assets/img/BotUnitNew-01.webp" alt="BOT UNIT"></div>
-                  <div>
-                    <div class="phone-name">Bot UNIT</div>
-                    <div class="phone-status">● En línea</div>
-                  </div>
+      <div style="margin-top:2rem;">
+        <button class="btn-primary" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
+          Cotizar mi Proyecto <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- LADO DERECHO: PANTALLA PREMIUM INTERACTIVA (100% GRÁFICA) -->
+    <div class="bots-right">
+      <div class="device-mockup">
+        
+        <!-- Barra superior del Dispositivo -->
+        <div class="device-header">
+          <div class="device-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <div class="device-search-bar"><i class="fa-solid fa-lock" style="font-size:0.7rem; color:#00E676;"></i> unit.pe/demo-live</div>
+        </div>
+        
+        <!-- Selector de Aplicaciones (Pestañas Modernas) -->
+        <div class="device-nav-tabs">
+          <button class="device-tab active" onclick="changeDeviceDemo('voy-app')">
+            <i class="fa-solid fa-car-side"></i> Sistema a medida
+          </button>
+          <button class="device-tab" onclick="changeDeviceDemo('web-institucional')">
+            <i class="fa-solid fa-graduation-cap"></i> Portal Web
+          </button>
+          <button class="device-tab" onclick="changeDeviceDemo('ux-dashboard')">
+            <i class="fa-solid fa-chart-line"></i> UX Análisis
+          </button>
+        </div>
+        
+        <!-- Contenedor del Render Gráfico Principal (100% de la pantalla) -->
+        <div class="device-screen-content" id="deviceCanvas">
+          
+          <!-- DEMO 1: SISTEMA VOY (Por defecto) -->
+          <div class="demo-wrapper dynamic-fade">
+            <div class="voy-dashboard">
+              <div class="voy-header-status">
+                <span class="badge-live animate-pulse-green">● SISTEMA VOY EN VIVO</span>
+                <span style="color:#64748B; font-size:0.75rem;">Servidor: Huanta-01</span>
+              </div>
+              
+              <!-- Mapa Interactivo Simulado -->
+              <div class="voy-map-widget">
+                <div class="map-grid-lines"></div>
+                <div class="map-vector-route"></div>
+                <!-- Nodo del vehículo simulado -->
+                <div class="map-marker-car">
+                  <i class="fa-solid fa-car"></i>
+                  <div class="marker-pulse"></div>
                 </div>
-                <div class="phone-chat">
-                  <div class="chat-bubble bubble-in">Hola, ¿cuánto cuesta una página web?</div>
-                  <div class="chat-bubble bubble-out">¡Hola! 👋 Tenemos planes desde S/.299. ¿Te envío el catálogo? 📄</div>
-                  <div class="chat-bubble bubble-in">Sí por favor</div>
-                  <div class="chat-bubble bubble-out">¡Listo! 🚀 ¿Tienes 5 min para una llamada hoy?</div>
-                  <div class="bubble-typing">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                  </div>
+                <div class="map-pop-info">Ruta Óptima Calculada</div>
+              </div>
+
+              <!-- Indicadores de Rendimiento -->
+              <div class="voy-metrics">
+                <div class="metric-pill">
+                  <span class="metric-label">Latencia API</span>
+                  <span class="metric-value" style="color:#00E676;">14ms</span>
+                </div>
+                <div class="metric-pill">
+                  <span class="metric-label">Peticiones concurrentes</span>
+                  <span class="metric-value">4,821/s</span>
+                </div>
+                <div class="metric-pill">
+                  <span class="metric-label">Uso de Base de Datos</span>
+                  <span class="metric-value" style="color:#00B0FF;">24%</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="phone-glow"></div>
-          <div class="wh-float-icon wh-icon-1">
-  <i class="fa-brands fa-whatsapp"></i>
-</div>
 
-<div class="wh-float-icon wh-icon-2">
-  <i class="fa-solid fa-robot"></i>
-</div>
-
-<div class="wh-float-icon wh-icon-3">
-  <i class="fa-solid fa-paper-plane"></i>
-</div>
         </div>
       </div>
+      <!-- Resplandor de fondo de la pantalla -->
+      <div class="device-glow"></div>
     </div>
-  </section>
+
+  </div>
+</section>
+
+  <section class="portfolio-section" id="portafolio">
+  <div class="portfolio-inner">
+
+    <div class="portfolio-header">
+      <div>
+        <div class="section-label">Portafolio</div>
+        <h2 class="section-title">Lo que construimos</h2>
+      </div>
+      <div class="portfolio-filters">
+        <button class="pf-tab active" data-filter="all">Todos</button>
+        <button class="pf-tab" data-filter="sistema">
+          <i class="fa-solid fa-server fa-xs"></i> Sistemas
+        </button>
+        <button class="pf-tab" data-filter="web">
+          <i class="fa-solid fa-globe fa-xs"></i> Web
+        </button>
+        <!--<button class="pf-tab" data-filter="bot">
+          <i class="fa-brands fa-whatsapp fa-xs"></i> Bots
+        </button>
+        <button class="pf-tab" data-filter="ecommerce">
+          <i class="fa-solid fa-bag-shopping fa-xs"></i> Tiendas
+        </button>-->
+      </div>
+    </div>
+
+    <p class="portfolio-subtitle">
+      Cada proyecto tiene su propia marca e identidad, todo desarrollado íntegramente por UNIT.
+    </p>
+
+    <div class="pf-slider-wrap">
+      <div class="pf-track-outer">
+        <div class="pf-track" id="pfTrack">
+
+          <div class="pf-card" data-cat="sistema">
+            <div class="pf-thumb">
+              <img class="pf-screenshot"
+                   src="./assets/img/portfolio/SanAlfonso.png"
+                   alt="VOY - Plataforma de Movilidad Urbana"
+                   loading="lazy"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+              <div class="pf-thumb-placeholder" style="display:none;">
+                <i class="fa-solid fa-image"></i>
+                <span>Voy.jpg</span>
+              </div>
+              <div class="pf-status pf-status--soon">
+                <span class="pf-status-dot"></span> Próximamente
+              </div>
+              <div class="pf-overlay">
+                <div class="pf-overlay-desc">Aplicación móvil web de transporte urbano en tiempo real. Conexión inteligente entre pasajeros y conductores, optimización de rutas y gestión segura.</div>
+              </div>
+            </div>
+            <div class="pf-info">
+              <div class="pf-info-left">
+                <span class="pf-info-name">VOY</span>
+                <span class="pf-info-type">Sistema · Movilidad - Transporte</span>
+              </div>
+              <div class="pf-info-right">
+                <a href="#" class="pf-link-btn" title="Ver">
+                  <i class="fa-solid fa-eye"></i>
+                </a>
+                <a href="#contacto" class="pf-link-btn" title="Quiero algo similar">
+                  <i class="fa-solid fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pf-card" data-cat="web">
+            <div class="pf-thumb">
+              <img class="pf-screenshot"
+                   src="./assets/img/portfolio/SanAlfonso.png"
+                   alt="Plataforma escolar"
+                   loading="lazy"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+              <div class="pf-thumb-placeholder" style="display:none;">
+                <i class="fa-solid fa-image"></i>
+                <span>SanAlfonso.jpg</span>
+              </div>
+              <div class="pf-status pf-status--live">
+                <span class="pf-status-dot"></span> Activo
+              </div>
+              <div class="pf-overlay">
+                <div class="pf-overlay-desc">Sitio web institucional diseñado para la difusión de la propuesta educativa, información del proceso de admisión, galería de eventos y canales oficiales de atención para la comunidad escolar.</div>
+              </div>
+            </div>
+            <div class="pf-info">
+              <div class="pf-info-left">
+                <span class="pf-info-name">San Alfonso - Huanta</span>
+                <span class="pf-info-type">Sitio web · Institucional</span>
+              </div>
+              <div class="pf-info-right">
+                <a href="https://sanalfonsohuanta.edu.pe/" class="pf-link-btn" title="Ver">
+                  <i class="fa-solid fa-eye"></i>
+                </a>
+                <a href="#contacto" class="pf-link-btn" title="Quiero algo similar">
+                  <i class="fa-solid fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pf-card" data-cat="web">
+            <div class="pf-thumb">
+              <img class="pf-screenshot"
+                   src="./assets/img/portfolio/IESHuanta.png"
+                   alt="Landing de alta conversión"
+                   loading="lazy"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+              <div class="pf-thumb-placeholder" style="display:none;">
+                <i class="fa-solid fa-image"></i>
+                <span>IESHuanta.jpg</span>
+              </div>
+              <div class="pf-status pf-status--live">
+                <span class="pf-status-dot"></span> Activo
+              </div>
+              <div class="pf-overlay">
+                <div class="pf-overlay-desc">Portal web institucional desarrollado para la presentación de carreras profesionales técnicas, información del examen de admisión, transparencia y canales de atención digital.</div>
+              </div>
+            </div>
+            <div class="pf-info">
+              <div class="pf-info-left">
+                <span class="pf-info-name">I.E.S. Huanta</span>
+                <span class="pf-info-type">Sitio web · Institucional</span>
+              </div>
+              <div class="pf-info-right">
+                <a href="https://iestphuanta.edu.pe/" class="pf-link-btn" title="Ver">
+                  <i class="fa-solid fa-eye"></i>
+                </a>
+                <a href="#contacto" class="pf-link-btn" title="Quiero algo similar">
+                  <i class="fa-solid fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div></div><div class="pf-controls">
+        <button class="pf-arrow" id="pfPrev" aria-label="Anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="pf-dots" id="pfDots"></div>
+        <button class="pf-arrow" id="pfNext" aria-label="Siguiente">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <span class="pf-counter" id="pfCounter"></span>
+      </div>
+    </div><div class="portfolio-cta-strip">
+      <div class="pf-cta-text">
+        <h3>¿Tienes un proyecto en mente?</h3>
+        <p>Construimos el sistema, web o bot que necesitas — con tu marca o la nuestra.</p>
+      </div>
+      <div class="pf-cta-actions">
+        <button class="btn-primary"
+                onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
+          Hablemos de tu proyecto <i class="fa-solid fa-arrow-right"></i>
+        </button>
+        <a class="pf-wh-btn"
+           href="https://wa.me/51906829934?text=Hola,%20vi%20su%20portafolio%20y%20quiero%20algo%20similar"
+           target="_blank" rel="noopener">
+          <i class="fa-brands fa-whatsapp"></i> WhatsApp directo
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
 
   <!-- ============================
        PROCESS
@@ -1720,17 +2693,17 @@
         <p style="color:var(--muted);font-size:0.8rem;margin-bottom:0.85rem;">O encuéntranos en nuestras redes:</p>
 
         <div class="social-row">
-          <a class="social-btn ig" href="#" target="_blank" rel="noopener">
+          <a target="_blank" class="social-btn ig" href="#" target="_blank" rel="noopener">
             <i class="fa-brands fa-instagram"></i> Instagram
           </a>
-          <a class="social-btn fb" href="#" target="_blank" rel="noopener">
+          <a target="_blank" class="social-btn fb" href="https://www.facebook.com/UNITPERU" target="_blank" rel="noopener">
             <i class="fa-brands fa-facebook"></i> Facebook
           </a>
-          <a class="social-btn tk" href="#" target="_blank" rel="noopener">
+          <a target="_blank" class="social-btn tk" href="#" target="_blank" rel="noopener">
             <i class="fa-brands fa-tiktok"></i> TikTok
           </a>
-          <a class="social-btn li" href="#" target="_blank" rel="noopener">
-            <i class="fa-brands fa-linkedin"></i> LinkedIn
+          <a target="_blank" class="social-btn li" href="https://t.me/+7GO-lgXiOXJjMjIx" target="_blank" rel="noopener">
+            <i class="fa-brands fa-telegram"></i> Telegram
           </a>
         </div>
 
@@ -1741,46 +2714,61 @@
       </div>
 
       <div class="contact-right">
-        <h3>Cuéntanos tu proyecto</h3>
+  <h3>Cuéntanos tu proyecto</h3>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="fname">Nombre</label>
-            <input class="form-input" id="fname" type="text" placeholder="Tu nombre" autocomplete="given-name" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="fphone">WhatsApp</label>
-            <input class="form-input" id="fphone" type="tel" placeholder="+51 999 999 999" autocomplete="tel" />
-          </div>
-        </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label class="form-label" for="fname">Nombre</label>
+      <input class="form-input" id="fname" type="text" placeholder="Tu nombre" autocomplete="given-name" />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="fphone">WhatsApp</label>
+      <input class="form-input" id="fphone" type="tel" maxlength="9" placeholder="999 999 999" autocomplete="tel" />
+    </div>
+  </div>
 
-        <div class="form-group">
-          <label class="form-label" for="femail">Correo electrónico</label>
-          <input class="form-input" id="femail" type="email" placeholder="tu@correo.com" autocomplete="email" />
-        </div>
+  <div class="form-group">
+    <div class="label-container">
+      <label class="form-label" for="femail">Correo electrónico</label>
+    </div>
+    <input class="form-input" id="femail" type="email" placeholder="tu@correo.com" autocomplete="email" />
+  </div>
 
-        <div class="form-group">
-          <label class="form-label" for="fservice">¿Qué necesitas?</label>
-          <select class="form-select" id="fservice">
-            <option value="" disabled selected>Selecciona un servicio</option>
-            <option>Página web</option>
-            <option>Sistema o plataforma</option>
-            <option>Bot de WhatsApp</option>
-            <option>Marketing digital</option>
-            <option>Tienda en línea</option>
-            <option>Otro</option>
-          </select>
-        </div>
+  <div class="form-group">
+    <label class="form-label" for="fservice">¿Qué necesitas?</label>
+    <select class="form-select" id="fservice">
+      <option value="" disabled selected>Selecciona un servicio</option>
+      <option value="Página web">Página web</option>
+      <option value="Sistema o plataforma">Sistema o plataforma</option>
+      <option value="Marketing digital">Marketing digital</option>
+      <option value="Tienda en línea">Tienda en línea</option>
+      <option value="Otro">Otro</option>
+    </select>
+  </div>
 
-        <div class="form-group">
-          <label class="form-label" for="fmsg">Cuéntanos más (opcional)</label>
-          <textarea class="form-textarea" id="fmsg" placeholder="Describe brevemente tu proyecto o idea..."></textarea>
-        </div>
+  <div class="form-group">
+    <label class="form-label" for="fmsg">Cuéntanos más (opcional)</label>
+    <textarea class="form-textarea" id="fmsg" placeholder="Describe brevemente tu proyecto o idea..."></textarea>
+  </div>
 
-        <button class="form-submit" type="button">
-          Enviar mensaje <i class="fa-solid fa-paper-plane"></i>
-        </button>
-      </div>
+  <button class="form-submit" type="button" id="btnSubmit">
+    Enviar mensaje <i class="fa-solid fa-paper-plane"></i>
+  </button>
+</div>
+
+<!-- Modal Glassmorphism Profesional -->
+<div class="glass-modal-overlay" id="glassModal">
+  <div class="glass-modal-content">
+    <button class="glass-modal-close" id="btnCloseModal" aria-label="Cerrar modal">&times;</button>
+    <h4>Enviar mensaje</h4>
+    <p class="glass-modal-text">
+      Para brindarte una atención personalizada, procesaremos los detalles de tu requerimiento directamente a través de nuestro canal institucional.
+    </p>
+    <button class="btn-whatsapp-send" id="btnWhatsappSend">
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp
+    </button>
+  </div>
+</div>
 
     </div>
   </section>
@@ -1794,14 +2782,14 @@
   <div class="footer-top">
     <div class="footer-brand">
       <a href="#inicio">
-    <img src="./assets/img/LogoUnitNew-01.webp" alt="UNIT" style="height:44px;width:auto;display:block;" />
+    <img src="./assets/img/icon/LogoUnitNew-01.webp" alt="UNIT" style="height:44px;width:auto;display:block;" />
 </a>
       <p>Agencia digital especializada en desarrollo web, sistemas, automatización y marketing. Transformamos ideas en soluciones digitales que generan resultados reales.</p>
       <div class="footer-social">
-        <a href="#" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-        <a href="#" title="TikTok" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-        <a href="#" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a target="_blank" href="#" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a target="_blank" href="https://www.facebook.com/UNITPERU" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a target="_blank" href="#" title="TikTok" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a target="_blank" href="https://t.me/+7GO-lgXiOXJjMjIx" title="Telegram" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
         <a href="https://wa.me/51906829934" target="_blank" title="WhatsApp" aria-label="WhatsApp" rel="noopener"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
     </div>
@@ -1824,8 +2812,8 @@
         <li><a href="#inicio">Inicio</a></li>
         <li><a href="#proceso">Cómo trabajamos</a></li>
         <li><a href="#contacto">Contacto</a></li>
-        <li><a href="#">Portafolio</a></li>
-        <li><a href="#">Blog</a></li>
+        <li><a href="#portafolio">Portafolio</a></li>
+        <li><a href="https://t.me/+7GO-lgXiOXJjMjIx">Comunidad</a></li>
       </ul>
     </div>
 
@@ -2004,6 +2992,347 @@
   }, { rootMargin: '-40% 0px -55% 0px' });
 
   document.querySelectorAll('section[id]').forEach(s => activeObserver.observe(s));
+(function () {
+  var ANIM_MS = 420;
+  var GAP_PX  = 20; /* 1.25rem */
+
+  var track    = document.getElementById('pfTrack');
+  var btnPrev  = document.getElementById('pfPrev');
+  var btnNext  = document.getElementById('pfNext');
+  var dotsWrap = document.getElementById('pfDots');
+  var counter  = document.getElementById('pfCounter');
+  if (!track) return;
+
+  /* Estado */
+  var allCards     = Array.from(track.querySelectorAll('.pf-card'));
+  var visibleCards = allCards.slice();
+  var currentPage  = 0;
+  var perPage      = calcPerPage();
+  var totalPages   = 1;
+  var busy         = false;
+
+  /* Cuántas cards se ven según viewport */
+  function calcPerPage() {
+    if (window.innerWidth <= 640)  return 1;
+    if (window.innerWidth <= 1024) return 2;
+    return 3;
+  }
+
+  /* Ancho de una card */
+  function cardWidth() {
+    var outer = track.parentElement.clientWidth;
+    return (outer - GAP_PX * (perPage - 1)) / perPage;
+  }
+
+  /* Asigna anchos y recalcula páginas desplazamiento individual */
+  function layout() {
+    var w = cardWidth();
+    visibleCards.forEach(function(c) {
+      c.style.flexBasis = w + 'px';
+      c.style.flexShrink = '0';
+    });
+    // Se ajusta el cálculo para scroll por elemento individual
+    totalPages = Math.max(1, visibleCards.length - perPage + 1);
+  }
+
+  /* Mueve el track */
+  function goTo(page, instant) {
+    page = Math.max(0, Math.min(page, totalPages - 1));
+    currentPage = page;
+
+    if (instant) {
+      track.style.transition = 'none';
+      track.getBoundingClientRect(); /* flush */
+    }
+
+    // El desplazamiento calcula el offset por cada tarjeta
+    var offset = page * (cardWidth() + GAP_PX);
+    track.style.transform = 'translateX(-' + offset + 'px)';
+
+    if (instant) {
+      track.getBoundingClientRect();
+      track.style.transition = '';
+    }
+
+    renderUI();
+  }
+
+  /* Actualiza dots / flechas / contador */
+  function renderUI() {
+    dotsWrap.innerHTML = '';
+    for (var i = 0; i < totalPages; i++) {
+      (function(idx) {
+        var d = document.createElement('button');
+        d.className = 'pf-dot' + (idx === currentPage ? ' active' : '');
+        d.setAttribute('aria-label', 'Página ' + (idx + 1));
+        d.addEventListener('click', function() { slide(idx); });
+        dotsWrap.appendChild(d);
+      })(i);
+    }
+
+    btnPrev.disabled = currentPage === 0;
+    btnNext.disabled = currentPage >= totalPages - 1;
+
+    var from = visibleCards.length === 0 ? 0 : currentPage + 1;
+    var to   = Math.min(currentPage + perPage, visibleCards.length);
+    counter.innerHTML = '<em>' + from + '–' + to + '</em> / ' + visibleCards.length;
+  }
+
+  function slide(page) {
+    if (busy || page === currentPage) return;
+    busy = true;
+    goTo(page);
+    setTimeout(function() { busy = false; }, ANIM_MS);
+  }
+
+  /* Reconstruye el track con un subconjunto de cards */
+  function rebuild(cards) {
+    track.innerHTML = '';
+    track.style.transform = 'translateX(0)';
+    currentPage = 0;
+    visibleCards = cards;
+    cards.forEach(function(c) { track.appendChild(c); });
+    layout();
+    goTo(0, true);
+  }
+
+  /* Filtros */
+  document.querySelectorAll('.pf-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.pf-tab').forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      var f = tab.dataset.filter;
+      var filtered = allCards.filter(function(c) {
+        return f === 'all' || c.dataset.cat === f;
+      });
+      rebuild(filtered);
+    });
+  });
+
+  /* Flechas */
+  btnPrev.addEventListener('click', function() { slide(currentPage - 1); });
+  btnNext.addEventListener('click', function() { slide(currentPage + 1); });
+
+  /* Swipe táctil */
+  var tx0 = 0;
+  track.addEventListener('touchstart', function(e) { tx0 = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - tx0;
+    if (Math.abs(dx) > 48) { dx < 0 ? slide(currentPage + 1) : slide(currentPage - 1); }
+  }, { passive: true });
+
+  /* Resize */
+  var resizeT;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(function() {
+      var np = calcPerPage();
+      perPage = np;
+      layout();
+      if (currentPage >= totalPages) currentPage = totalPages - 1;
+      goTo(currentPage, true);
+    }, 120);
+  });
+
+  /* Init */
+  layout();
+  goTo(0, true);
+
+})();
+
+// Diccionario con las vistas UI completamente elaboradas y modernas
+  const demoViews = {
+    'voy-app': `<div class="demo-wrapper dynamic-fade">
+                  <div class="voy-dashboard">
+                    <div class="voy-header-status">
+                      <span class="badge-live animate-pulse-green">● SISTEMA VOY EN VIVO</span>
+                      <span style="color:#64748B; font-size:0.75rem;">Servidor: Huanta-01</span>
+                    </div>
+                    <div class="voy-map-widget">
+                      <div class="map-grid-lines"></div>
+                      <div class="map-vector-route"></div>
+                      <div class="map-marker-car">
+                        <i class="fa-solid fa-car"></i>
+                        <div class="marker-pulse"></div>
+                      </div>
+                      <div class="map-pop-info">Ruta Óptima Calculada</div>
+                    </div>
+                    <div class="voy-metrics">
+                      <div class="metric-pill"><span class="metric-label">Latencia API</span><span class="metric-value" style="color:#00E676;">14ms</span></div>
+                      <div class="metric-pill"><span class="metric-label">Peticiones concurrentes</span><span class="metric-value">4,821/s</span></div>
+                      <div class="metric-pill"><span class="metric-label">Uso de Base de Datos</span><span class="metric-value" style="color:#00B0FF;">24%</span></div>
+                    </div>
+                  </div>
+                </div>`,
+                
+    'web-institucional': `<div class="demo-wrapper dynamic-fade">
+                            <div class="portal-mockup">
+                              <div class="portal-nav">
+                                <span>Institución X</span>
+                                <div style="display:flex; gap:10px; font-size:0.6rem; opacity:0.8;"><span>Inicio</span><span>Admisión</span><span>Contacto</span></div>
+                              </div>
+                              <div class="portal-hero">
+                                <h4>Educación que Transforma</h4>
+                                <p>Matrículas abiertas para el periodo académico 2026. Plataforma virtual integrada para alumnos.</p>
+                                <span class="portal-btn">Postular Ahora <i class="fa-solid fa-paper-plane"></i></span>
+                              </div>
+                            </div>
+                          </div>`,
+                          
+    'ux-dashboard': `<div class="demo-wrapper dynamic-fade">
+                        <div class="ux-analytics-box">
+                          <div style="font-size:0.75rem; color:#A855F7; font-weight:bold; margin-bottom:10px;"><i class="fa-solid fa-chart-pie"></i> RETENCIÓN Y FLUJO DE USUARIOS (UX)</div>
+                          <div class="ux-chart-container">
+                            <div class="ux-bar" style="height: 40%;"></div>
+                            <div class="ux-bar" style="height: 65%;"></div>
+                            <div class="ux-bar" style="height: 95%;"></div>
+                            <div class="ux-bar" style="height: 55%;"></div>
+                            <div class="ux-bar" style="height: 85%;"></div>
+                            <div class="ux-bar" style="height: 70%;"></div>
+                          </div>
+                          <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:#64748B;">
+                            <span>Optimización de Interfaz</span>
+                            <span style="color:#E040FB; font-weight:bold;">+38% Conversión</span>
+                          </div>
+                        </div>
+                      </div>`
+  };
+
+  // Función controladora del intercambio de pantallas en la laptop
+  function changeDeviceDemo(viewKey) {
+    // 1. Quitar estado activo de los botones de pestañas anteriores
+    const tabs = document.querySelectorAll('.device-tab');
+    tabs.forEach(t => t.classList.remove('active'));
+    
+    // 2. Activar la pestaña seleccionada mediante el evento nativo
+    event.currentTarget.classList.add('active');
+    
+    // 3. Renderizar la vista gráfica moderna correspondiente al 100% del contenedor
+    document.getElementById('deviceCanvas').innerHTML = demoViews[viewKey];
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+  const fName = document.getElementById("fname");
+  const fPhone = document.getElementById("fphone");
+  const fEmail = document.getElementById("femail");
+  const fService = document.getElementById("fservice");
+  const fMsg = document.getElementById("fmsg");
+  
+  const btnSubmit = document.querySelector(".form-submit") || document.getElementById("btnSubmit");
+  const glassModal = document.getElementById("glassModal");
+  const btnCloseModal = document.getElementById("btnCloseModal");
+  const btnWhatsappSend = document.getElementById("btnWhatsappSend");
+
+  // Restricción en tiempo real para WhatsApp (9 dígitos, empieza con 9)
+  if (fPhone) {
+    fPhone.addEventListener("input", (e) => {
+      let value = e.target.value.replace(/\D/g, "");
+      if (value.length > 0 && value[0] !== '9') {
+        value = "";
+      }
+      e.target.value = value.substring(0, 9);
+    });
+  }
+
+  // --- Funciones de Error (Sin alterar el fondo del selector) ---
+  const aplicarErrorGlass = (elemento) => {
+    elemento.dataset.originalBorder = elemento.style.border;
+    elemento.dataset.originalBoxShadow = elemento.style.boxShadow;
+
+    // Solo afectamos el borde externo y el resplandor para no alterar el fondo ni las letras del select
+    elemento.style.setProperty("border", "1px solid rgba(255, 76, 76, 0.7)", "important");
+    elemento.style.setProperty("box-shadow", "0 0 12px rgba(255, 76, 76, 0.4)", "important");
+  };
+
+  const removerErrorGlass = (elemento) => {
+    if (elemento) {
+      elemento.style.border = elemento.dataset.originalBorder || "";
+      elemento.style.boxShadow = elemento.dataset.originalBoxShadow || "";
+    }
+  };
+
+  // --- ESCUCHADORES INMEDIATOS PARA CADA CAMPO ---
+  // Se activan al escribir (input) o cambiar de opción (change) garantizando la limpieza del error
+  if (fName) fName.addEventListener("input", () => removerErrorGlass(fName));
+  if (fPhone) fPhone.addEventListener("input", () => removerErrorGlass(fPhone));
+  if (fEmail) fEmail.addEventListener("input", () => removerErrorGlass(fEmail));
+  
+  // El selector se limpia inmediatamente al escoger una opción válida
+  if (fService) {
+    fService.addEventListener("change", () => {
+      if (fService.value !== "") removerErrorGlass(fService);
+    });
+  }
+
+  // --- Validación de Envío ---
+  if (btnSubmit) {
+    btnSubmit.addEventListener("click", (e) => {
+      e.preventDefault();
+      let isValid = true;
+
+      if (fName && fName.value.trim() === "") {
+        aplicarErrorGlass(fName);
+        isValid = false;
+      }
+
+      if (fPhone) {
+        const phoneValue = fPhone.value.trim();
+        if (phoneValue.length !== 9 || !phoneValue.startsWith("9")) {
+          aplicarErrorGlass(fPhone);
+          isValid = false;
+        }
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (fEmail && !emailRegex.test(fEmail.value.trim())) {
+        aplicarErrorGlass(fEmail);
+        isValid = false;
+      }
+
+      if (fService && fService.value === "") {
+        aplicarErrorGlass(fService);
+        isValid = false;
+      }
+
+      if (isValid && glassModal) {
+        glassModal.classList.add("active");
+      }
+    });
+  }
+
+  // --- Control del Modal ---
+  if (btnCloseModal && glassModal) {
+    btnCloseModal.addEventListener("click", () => glassModal.classList.remove("active"));
+    glassModal.addEventListener("click", (e) => {
+      if (e.target === glassModal) glassModal.classList.remove("active");
+    });
+  }
+
+  // --- Redirección Final a WhatsApp ---
+  if (btnWhatsappSend) {
+    btnWhatsappSend.addEventListener("click", () => {
+      const nombre = fName ? fName.value.trim() : "";
+      const telefono = fPhone ? fPhone.value.trim() : "";
+      const correo = fEmail ? fEmail.value.trim() : "";
+      const servicio = fService ? fService.value : "";
+      const mensajeAdicional = fMsg && fMsg.value.trim() ? fMsg.value.trim() : "Sin comentarios adicionales.";
+
+      const titulo = "📌Nuevo Proyecto Unit!🧑🏻‍💻";
+      const textoWhatsApp = `*${titulo}*%0A%0A` +
+                            `👤 *Nombre:* ${nombre}%0A` +
+                            `📱 *WhatsApp:* ${telefono}%0A` +
+                            `📧 *Correo:* ${correo}%0A` +
+                            `💼 *Servicio:* ${servicio}%0A` +
+                            `📝 *Detalles:* ${mensajeAdicional}`;
+
+      const numeroDestino = "51906829934"; 
+      const url = `https://api.whatsapp.com/send?phone=${numeroDestino}&text=${textoWhatsApp}`;
+      
+      window.open(url, "_blank");
+      glassModal.classList.remove("active");
+    });
+  }
+});
 </script>
 
 </body>
