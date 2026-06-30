@@ -61,7 +61,7 @@
 
   <meta name="twitter:image"
     content="https://unit.pe/assets/img/og-preview.jpg" />
-    
+
   <meta name="twitter:image:alt"
     content="UNIT - Desarrollo de Software" />
 
@@ -747,7 +747,7 @@
       <ul>
         <li><a href="#servicios">Páginas web</a></li>
         <li><a href="#servicios">Sistemas a medida</a></li>
-        <li><a href="#bots">Bots de WhatsApp</a></li>
+        <li><a href="#servicios">Diseños de Prototipado</a></li>
         <li><a href="#servicios">Marketing digital</a></li>
         <li><a href="#servicios">Tiendas en línea</a></li>
         <li><a href="#servicios">Integraciones API</a></li>
@@ -779,9 +779,9 @@
           </a>
         </li>
         <li>
-          <a href="#">
-            <i class="fa-solid fa-location-dot" style="color:var(--muted);"></i> Perú · Remoto
-          </a>
+          <a target="_blank" href="#" onclick="if (this.getAttribute('href') === '#') event.preventDefault();">
+    <i class="fa-solid fa-location-dot" style="color:var(--muted);"></i> Perú · Remoto
+</a>
         </li>
       </ul>
       <a href="https://wa.me/51906829934?text=Hola,%20quiero%20info%20sobre%20sus%20servicios"
