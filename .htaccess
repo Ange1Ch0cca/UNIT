@@ -1,0 +1,25 @@
+# ============================================
+# CONFIGURACIÓN GENERAL
+# ============================================
+
+# Evita mostrar el listado de archivos de una carpeta
+Options -Indexes
+
+# Activa el motor de reescritura
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+</IfModule>
+
+# ============================================
+# PÁGINA PERSONALIZADA PARA ERROR 404
+# ============================================
+
+ErrorDocument 404 /error404.php
+
+# ============================================
+# PROTEGER ARCHIVOS SENSIBLES
+# ============================================
+
+<FilesMatch "^(\.env|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|\.git)">
+    Require all denied
+</FilesMatch>
